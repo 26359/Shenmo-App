@@ -44,19 +44,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $stmt->bind_param("sssssssss", $student_id, $full_name, $grade_level, $email, $phone, $dob, $address, $username, $password);
             
             if ($stmt->execute()) {
-                $token = bin2hex(random_bytes(50));
-                $expires = date('Y-m-d H:i:s', time() + 86400);
-                
-                $update = $conn->prepare("UPDATE students SET verification_token = ?, verification_expires = ? WHERE student_id = ?");
-                $update->bind_param("sss", $token, $expires, $student_id);
-                $update->execute();
-                $update->close();
-                
-                require_once __DIR__ . '/includes/mailer.php';
-                $mailer = new Mailer();
-                $result = $mailer->sendVerificationEmail($email, $full_name, $token, 'student');
-                
-                $message = "Registration successful! A verification email has been sent to <strong>$email</strong>. Please check your inbox and click the verification link to activate your account.";
+                $conn->query("UPDATE students SET email_verified=1 WHERE student_id='" . $conn->real_escape_string($student_id) . "'");
+                $message = "Registration successful! You can now <a href='login.php' style='color:#667eea;font-weight:bold'>login here</a>.";
                 $_POST = array();
             } else {
                 $error = "Registration failed: " . $stmt->error;
