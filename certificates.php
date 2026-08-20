@@ -123,7 +123,7 @@ $conn->close();
         <div class="topbar">
             <button class="hamburger" onclick="toggleSidebar()">☰</button>
             <h2>🏆 My Certificates</h2>
-            <?php require_once 'includes/share_buttons.php'; ?>
+            <?php require_once __DIR__ . '/includes/share_buttons.php'; ?>
         </div>
 
         <?php if ($certs && $certs->num_rows > 0): ?>

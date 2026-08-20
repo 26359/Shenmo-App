@@ -52,7 +52,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $update->execute();
                 $update->close();
                 
-                require_once 'includes/mailer.php';
+                require_once __DIR__ . '/includes/mailer.php';
                 $mailer = new Mailer();
                 $result = $mailer->sendVerificationEmail($email, $full_name, $token, 'student');
                 

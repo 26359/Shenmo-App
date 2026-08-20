@@ -186,7 +186,7 @@ $conn->close();
         <!-- SHARE BUTTONS FOOTER -->
         <div style="background:#fff;border-top:1px solid #e2e8f0;padding:16px 25px;text-align:center">
             <p style="color:#94a3b8;font-size:0.8rem;margin-bottom:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px">Share Abacus Academy</p>
-            <?php require_once 'includes/share_buttons.php'; ?>
+            <?php require_once __DIR__ . '/includes/share_buttons.php'; ?>
         </div>
         </div>
     </div>

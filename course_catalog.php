@@ -226,7 +226,7 @@ $conn->close();
                 <a href="student_dashboard.php" class="btn btn-secondary btn-sm">🏠 Dashboard</a>
                 <a href="student_payments.php" class="btn btn-primary btn-sm">💳 Payments</a>
                 <a href="logout.php" class="btn btn-danger btn-sm">Logout</a>
-                <?php require_once 'includes/share_buttons.php'; ?>
+                <?php require_once __DIR__ . '/includes/share_buttons.php'; ?>
             </div>
         </div>
 

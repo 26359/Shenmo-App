@@ -80,7 +80,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['verify_otp'])) {
             $update->execute();
             $update->close();
             
-            require_once 'includes/mailer.php';
+            require_once __DIR__ . '/includes/mailer.php';
             $mailer = new Mailer();
             $result = $mailer->sendVerificationEmail($data['email'], $data['user_names'], $token, 'admin');
             
