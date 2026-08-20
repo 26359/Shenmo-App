@@ -103,12 +103,12 @@ $conn->close();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - Abacus Academy</title>
-    <link rel="manifest" href="/shenmo_app1/manifest.json">
+    <link rel="manifest" href="/manifest.json">
     <meta name="theme-color" content="#3b82f6">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="Shenmo">
-    <link rel="apple-touch-icon" href="/shenmo_app1/icons/icon-192.png">
+    <link rel="apple-touch-icon" href="/icons/icon-192.png">
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; display: flex; justify-content: center; align-items: center; padding: 20px; }
@@ -229,7 +229,7 @@ $conn->close();
     </div>
 <script>
   if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/shenmo_app1/sw.js');
+    navigator.serviceWorker.register('/sw.js');
   }
 </script>
 </body>

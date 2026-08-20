@@ -1,5 +1,5 @@
 <?php
 return [
-    'app_url' => 'http://localhost/shenmo_app1',
+    'app_url' => 'http://shenmoapp.atwebpages.com',
     'app_name' => 'Abacus Academy',
 ];
