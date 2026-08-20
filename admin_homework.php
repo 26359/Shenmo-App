@@ -24,29 +24,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['assign_homework'])) {
     $due_date    = $_POST['due_date'];
     $target      = $_POST['target'];
     $lesson_id   = !empty($_POST['lesson_id']) ? (int)$_POST['lesson_id'] : null;
-    $file_path   = null;
-
-    // Handle file upload
-    if (!empty($_FILES['hw_file']['name'])) {
-        $allowed = ['pdf','doc','docx'];
-        $ext = strtolower(pathinfo($_FILES['hw_file']['name'], PATHINFO_EXTENSION));
-        if (!in_array($ext, $allowed)) {
-            $message = "Only PDF, DOC, DOCX files are allowed."; $msg_type = "error";
-            goto skip_assign;
-        }
-        if ($_FILES['hw_file']['size'] > 20 * 1024 * 1024) {
-            $message = "File must be under 20 MB."; $msg_type = "error";
-            goto skip_assign;
-        }
-        $filename  = time() . '_' . preg_replace('/[^a-zA-Z0-9._-]/', '_', basename($_FILES['hw_file']['name']));
-        $dest      = __DIR__ . '/uploads/homework/' . $filename;
-        if (!move_uploaded_file($_FILES['hw_file']['tmp_name'], $dest)) {
-            $message = "File upload failed. Check folder permissions."; $msg_type = "error";
-            goto skip_assign;
-        }
-        $file_path = 'uploads/homework/' . $filename;
-    }
-
     $notif_title = "📝 New Homework: $title";
     $notif_msg   = "You have a new homework assignment: \"$title\". Due: " . date('M d, Y', strtotime($due_date)) . ".";
 
@@ -55,16 +32,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['assign_homework'])) {
         $count = 0;
         while ($s = $students->fetch_assoc()) {
             $sid = $s['student_id'];
-            $stmt = $conn->prepare("INSERT INTO homework (student_id, lesson_id, title, description, due_date, file_path, status) VALUES (?, ?, ?, ?, ?, ?, 'pending')");
-            $stmt->bind_param("sissss", $sid, $lesson_id, $title, $description, $due_date, $file_path);
+            $stmt = $conn->prepare("INSERT INTO homework (student_id, lesson_id, title, description, due_date, status) VALUES (?, ?, ?, ?, ?, 'pending')");
+            $stmt->bind_param("sisss", $sid, $lesson_id, $title, $description, $due_date);
             $stmt->execute(); $stmt->close();
             notify($conn, $sid, $notif_title, $notif_msg);
             $count++;
         }
         $message = "Homework assigned to $count students!";
     } else {
-        $stmt = $conn->prepare("INSERT INTO homework (student_id, lesson_id, title, description, due_date, file_path, status) VALUES (?, ?, ?, ?, ?, ?, 'pending')");
-        $stmt->bind_param("sissss", $target, $lesson_id, $title, $description, $due_date, $file_path);
+        $stmt = $conn->prepare("INSERT INTO homework (student_id, lesson_id, title, description, due_date, status) VALUES (?, ?, ?, ?, ?, 'pending')");
+        $stmt->bind_param("sisss", $target, $lesson_id, $title, $description, $due_date);
         if ($stmt->execute()) {
             notify($conn, $target, $notif_title, $notif_msg);
             $message = "Homework assigned successfully!";
@@ -73,16 +50,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['assign_homework'])) {
         }
         $stmt->close();
     }
-    skip_assign:;
 }
 
 // ── Delete homework ────────────────────────────────────────────────────────
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_hw'])) {
     $hw_id = (int)$_POST['hw_id'];
-    $row = $conn->query("SELECT file_path FROM homework WHERE id=$hw_id")->fetch_assoc();
-    if ($row && $row['file_path'] && file_exists(__DIR__ . '/' . $row['file_path'])) {
-        unlink(__DIR__ . '/' . $row['file_path']);
-    }
     $conn->query("DELETE FROM homework WHERE id=$hw_id");
     $message = "Homework deleted."; $msg_type = "error";
 }
@@ -102,7 +74,7 @@ $conn->query("CREATE TABLE IF NOT EXISTS homework_submissions (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4");
 
 $homework_list = $conn->query("
-    SELECT h.id, h.title, h.due_date, h.status, h.file_path, h.description,
+    SELECT h.id, h.title, h.due_date, h.status, h.description,
            s.full_name, l.lesson_title,
            sub.file_path AS submission_file, sub.submitted_at
     FROM homework h
@@ -148,13 +120,6 @@ $conn->close();
         .form-group input,.form-group select,.form-group textarea{padding:10px 14px;border:2px solid #e2e8f0;border-radius:10px;font-size:0.9rem;transition:border-color 0.2s;font-family:inherit;background:#fff}
         .form-group input:focus,.form-group select:focus,.form-group textarea:focus{outline:none;border-color:#3b82f6}
         .form-group textarea{resize:vertical;min-height:80px}
-        /* File drop zone */
-        .drop-zone{border:2px dashed #cbd5e1;border-radius:12px;padding:28px;text-align:center;cursor:pointer;transition:all 0.2s;background:#f8fafc;position:relative}
-        .drop-zone:hover,.drop-zone.dragover{border-color:#3b82f6;background:#eff6ff}
-        .drop-zone input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
-        .drop-zone .dz-icon{font-size:2.2rem;margin-bottom:8px}
-        .drop-zone p{color:#64748b;font-size:0.88rem;margin:0}
-        .drop-zone .dz-name{color:#3b82f6;font-weight:600;font-size:0.9rem;margin-top:6px;display:none}
         .btn{display:inline-flex;align-items:center;gap:7px;padding:10px 20px;border:none;border-radius:10px;cursor:pointer;font-size:0.9rem;font-weight:600;text-decoration:none;transition:all 0.2s}
         .btn-primary{background:linear-gradient(135deg,#3b82f6,#8b5cf6);color:#fff}
         .btn-primary:hover{transform:translateY(-2px);box-shadow:0 6px 15px rgba(59,130,246,0.35)}
@@ -264,15 +229,6 @@ $conn->close();
                         <label>Description / Instructions</label>
                         <textarea name="description" placeholder="Describe the homework task..."></textarea>
                     </div>
-                    <div class="form-group" style="margin-bottom:20px">
-                        <label>Attach Document (PDF, DOC, DOCX — max 20 MB)</label>
-                        <div class="drop-zone" id="dropZone">
-                            <input type="file" name="hw_file" id="hwFile" accept=".pdf,.doc,.docx">
-                            <div class="dz-icon">📎</div>
-                            <p>Drag & drop a file here, or <strong>click to browse</strong></p>
-                            <div class="dz-name" id="dzName"></div>
-                        </div>
-                    </div>
                     <button type="submit" name="assign_homework" class="btn btn-primary">📤 Assign Homework</button>
                 </form>
             </div>
@@ -282,7 +238,7 @@ $conn->close();
                 <div class="table-wrap">
                     <table>
                         <thead>
-                            <tr><th>Title</th><th>Student</th><th>Due Date</th><th>Status</th><th>Homework File</th><th>Submission</th><th>Action</th></tr>
+                            <tr><th>Title</th><th>Student</th><th>Due Date</th><th>Status</th><th>Submission</th><th>Action</th></tr>
                         </thead>
                         <tbody>
                         <?php if ($homework_list && $homework_list->num_rows > 0): ?>
@@ -297,15 +253,6 @@ $conn->close();
                                 <td><?php echo htmlspecialchars($hw['full_name']); ?></td>
                                 <td><?php echo date('M d, Y', strtotime($hw['due_date'])); ?></td>
                                 <td><span class="badge badge-<?php echo $hw['status']; ?>"><?php echo ucfirst($hw['status']); ?></span></td>
-                                <td>
-                                    <?php if ($hw['file_path']): ?>
-                                        <a href="<?php echo htmlspecialchars($hw['file_path']); ?>" target="_blank" class="file-link">
-                                            <?php echo str_ends_with($hw['file_path'],'.pdf') ? '📄' : '📝'; ?> View File
-                                        </a>
-                                    <?php else: ?>
-                                        <span style="color:#cbd5e1">—</span>
-                                    <?php endif; ?>
-                                </td>
                                 <td>
                                     <?php if (!empty($hw['submission_file'])): ?>
                                         <a href="<?php echo htmlspecialchars($hw['submission_file']); ?>" target="_blank" class="file-link" style="color:#10b981">
@@ -341,25 +288,7 @@ function toggleSidebar(){
     document.getElementById('sidebar').classList.toggle('open');
     document.getElementById('overlay').classList.toggle('active');
 }
-const fileInput = document.getElementById('hwFile');
-const dzName    = document.getElementById('dzName');
-const dropZone  = document.getElementById('dropZone');
-fileInput.addEventListener('change', () => {
-    if (fileInput.files[0]) {
-        dzName.textContent = '✅ ' + fileInput.files[0].name;
-        dzName.style.display = 'block';
-    }
-});
-dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('dragover'); });
-dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
-dropZone.addEventListener('drop', e => {
-    e.preventDefault(); dropZone.classList.remove('dragover');
-    if (e.dataTransfer.files[0]) {
-        fileInput.files = e.dataTransfer.files;
-        dzName.textContent = '✅ ' + e.dataTransfer.files[0].name;
-        dzName.style.display = 'block';
-    }
-});
+
 </script>
 </body>
 </html>
