@@ -59,7 +59,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_hw'])) {
 $conn->query("UPDATE notifications SET is_read=1 WHERE user_id='$student_id' AND notification_type='homework' AND is_read=0");
 
 $homework_result = $conn->query("
-    SELECT h.*, l.lesson_title, c.course_name,
+    SELECT h.id, h.title, h.description, h.due_date, h.status,
+           l.lesson_title, c.course_name,
            hs.file_path AS submission_file, hs.submitted_at AS sub_time
     FROM homework h
     LEFT JOIN lessons l ON h.lesson_id = l.id
@@ -193,25 +194,16 @@ $conn->close();
                 <?php endif; ?>
 
                 <div class="hw-meta">
-                    <?php if ($hw['course_name']): ?>
+                    <?php if (!empty($hw['course_name'])): ?>
                         <div class="hw-meta-item">📚 <?php echo htmlspecialchars($hw['course_name']); ?></div>
                     <?php endif; ?>
-                    <?php if ($hw['lesson_title']): ?>
+                    <?php if (!empty($hw['lesson_title'])): ?>
                         <div class="hw-meta-item">📖 <?php echo htmlspecialchars($hw['lesson_title']); ?></div>
                     <?php endif; ?>
                     <div class="hw-meta-item">📅 Due: <strong><?php echo date('M d, Y', strtotime($hw['due_date'])); ?></strong></div>
-                    <?php if ($hw['grade']): ?>
-                        <div class="hw-meta-item">🎯 Grade: <strong><?php echo $hw['grade']; ?>%</strong></div>
-                    <?php endif; ?>
                 </div>
 
                 <div class="hw-actions">
-                    <?php if ($hw['file_path']): ?>
-                        <a href="<?php echo htmlspecialchars($hw['file_path']); ?>" target="_blank" class="btn btn-outline">
-                            <?php echo str_ends_with($hw['file_path'],'.pdf') ? '📄' : '📝'; ?> View Assignment
-                        </a>
-                    <?php endif; ?>
-
                     <?php if ($hw['submission_file']): ?>
                         <a href="<?php echo htmlspecialchars($hw['submission_file']); ?>" target="_blank" class="btn btn-success">
                             ✅ My Submission
@@ -243,12 +235,7 @@ $conn->close();
                     <?php endif; ?>
                 <?php endif; ?>
 
-                <?php if ($hw['feedback']): ?>
-                    <div class="feedback-box">
-                        <strong>Teacher Feedback:</strong>
-                        <p><?php echo nl2br(htmlspecialchars($hw['feedback'])); ?></p>
-                    </div>
-                <?php endif; ?>
+
             </div>
             <?php endwhile; ?>
         <?php else: ?>

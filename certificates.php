@@ -13,24 +13,8 @@ $student_id = $_SESSION['student_id'];
 // Mark certificate notifications as read
 $conn->query("UPDATE notifications SET is_read=1 WHERE user_id='$student_id' AND notification_type='certificate' AND is_read=0");
 
-// Increment download count on download request
-if (isset($_GET['download'])) {
-    $cert_id = (int)$_GET['download'];
-    $row = $conn->query("SELECT pdf_path FROM certificates WHERE id=$cert_id AND student_id='$student_id'")->fetch_assoc();
-    if ($row && $row['pdf_path'] && file_exists(__DIR__ . '/' . $row['pdf_path'])) {
-        $conn->query("UPDATE certificates SET download_count = download_count + 1 WHERE id=$cert_id");
-        $conn->close();
-        $file = __DIR__ . '/' . $row['pdf_path'];
-        header('Content-Type: application/pdf');
-        header('Content-Disposition: attachment; filename="certificate_' . $cert_id . '.pdf"');
-        header('Content-Length: ' . filesize($file));
-        readfile($file);
-        exit;
-    }
-}
-
 $certs = $conn->query("
-    SELECT c.*, co.course_name, co.level_number
+    SELECT c.id, c.certificate_number, c.issue_date, co.course_name, co.level_number
     FROM certificates c
     JOIN courses co ON c.course_id = co.id
     WHERE c.student_id = '$student_id'
@@ -139,16 +123,7 @@ $conn->close();
                     <div class="cert-num"># <?php echo htmlspecialchars($cert['certificate_number']); ?></div>
                     <div class="cert-date">📅 Issued: <?php echo date('F d, Y', strtotime($cert['issue_date'])); ?></div>
                     <div class="cert-actions">
-                        <?php if ($cert['pdf_path'] && file_exists(__DIR__ . '/' . $cert['pdf_path'])): ?>
-                            <a href="certificates.php?download=<?php echo $cert['id']; ?>" class="btn btn-download">
-                                📥 Download PDF
-                            </a>
-                            <a href="<?php echo htmlspecialchars($cert['pdf_path']); ?>" target="_blank" class="btn btn-view">
-                                👁️ View
-                            </a>
-                        <?php else: ?>
-                            <span class="btn btn-disabled">📄 PDF not available yet</span>
-                        <?php endif; ?>
+                        <span class="btn btn-disabled">🏆 Certificate Issued</span>
                     </div>
                 </div>
             </div>
