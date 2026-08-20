@@ -40,13 +40,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($check->num_rows > 0) {
             $error = "Student ID or Username already exists.";
         } else {
-            $stmt = $conn->prepare("INSERT INTO students (student_id, full_name, grade_level, email, phone, dob, address, username, password) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            // Ensure email_verified column exists
+            $conn->query("ALTER TABLE students ADD COLUMN IF NOT EXISTS email_verified TINYINT(1) DEFAULT 0");
+            $stmt = $conn->prepare("INSERT INTO students (student_id, full_name, grade_level, email, phone, dob, address, username, password, email_verified) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 1)");
             $stmt->bind_param("sssssssss", $student_id, $full_name, $grade_level, $email, $phone, $dob, $address, $username, $password);
-            
             if ($stmt->execute()) {
-                $conn->query("UPDATE students SET email_verified=1 WHERE student_id='" . $conn->real_escape_string($student_id) . "'");
                 $message = "Registration successful! You can now <a href='login.php' style='color:#667eea;font-weight:bold'>login here</a>.";
-                $_POST = array();
+                $_POST = [];
             } else {
                 $error = "Registration failed: " . $stmt->error;
             }
