@@ -22,30 +22,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['issue_cert'])) {
     $course_id  = (int)$_POST['course_id'];
     $issue_date = $_POST['issue_date'];
     $cert_number = 'CERT-' . strtoupper(substr(md5($student_id . $course_id . time()), 0, 8));
-    $pdf_path   = null;
 
-    // Handle PDF upload
-    if (!empty($_FILES['cert_pdf']['name'])) {
-        $ext = strtolower(pathinfo($_FILES['cert_pdf']['name'], PATHINFO_EXTENSION));
-        if ($ext !== 'pdf') {
-            $message = "Certificate file must be a PDF."; $msg_type = "error";
-            goto skip_cert;
-        }
-        if ($_FILES['cert_pdf']['size'] > 20 * 1024 * 1024) {
-            $message = "PDF must be under 20 MB."; $msg_type = "error";
-            goto skip_cert;
-        }
-        $filename = $cert_number . '_' . $student_id . '.pdf';
-        $dest     = __DIR__ . '/uploads/certificates/' . $filename;
-        if (!move_uploaded_file($_FILES['cert_pdf']['tmp_name'], $dest)) {
-            $message = "PDF upload failed. Check folder permissions."; $msg_type = "error";
-            goto skip_cert;
-        }
-        $pdf_path = 'uploads/certificates/' . $filename;
-    }
-
-    $stmt = $conn->prepare("INSERT INTO certificates (student_id, course_id, certificate_number, issue_date, pdf_path) VALUES (?, ?, ?, ?, ?)");
-    $stmt->bind_param("sisss", $student_id, $course_id, $cert_number, $issue_date, $pdf_path);
+    $stmt = $conn->prepare("INSERT INTO certificates (student_id, course_id, certificate_number, issue_date) VALUES (?, ?, ?, ?)");
+    $stmt->bind_param("siss", $student_id, $course_id, $cert_number, $issue_date);
     if ($stmt->execute()) {
         // Get student name and course name for notification
         $sname = $conn->query("SELECT full_name FROM students WHERE student_id='$student_id'")->fetch_assoc()['full_name'] ?? 'Student';
@@ -61,16 +40,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['issue_cert'])) {
         $message = "Error: " . $stmt->error; $msg_type = "error";
     }
     $stmt->close();
-    skip_cert:;
 }
 
 // ── Revoke certificate ─────────────────────────────────────────────────────
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['revoke_cert'])) {
     $cert_id = (int)$_POST['cert_id'];
-    $row = $conn->query("SELECT pdf_path FROM certificates WHERE id=$cert_id")->fetch_assoc();
-    if ($row && $row['pdf_path'] && file_exists(__DIR__ . '/' . $row['pdf_path'])) {
-        unlink(__DIR__ . '/' . $row['pdf_path']);
-    }
     $conn->query("DELETE FROM certificates WHERE id=$cert_id");
     $message = "Certificate revoked."; $msg_type = "error";
 }
@@ -79,7 +53,7 @@ $students_list    = $conn->query("SELECT student_id, full_name FROM students ORD
 $courses_list     = $conn->query("SELECT id, course_name, level_number FROM courses ORDER BY level_number");
 $pending_payments = $conn->query("SELECT COUNT(*) as c FROM payments WHERE status='pending'")->fetch_assoc()['c'] ?? 0;
 $certs_list       = $conn->query("
-    SELECT c.id, c.certificate_number, c.issue_date, c.pdf_path,
+    SELECT c.id, c.certificate_number, c.issue_date,
            s.full_name, co.course_name, co.level_number
     FROM certificates c
     JOIN students s  ON c.student_id = s.student_id
@@ -121,12 +95,6 @@ $conn->close();
         .form-group label{font-size:0.85rem;font-weight:600;color:#475569}
         .form-group input,.form-group select{padding:10px 14px;border:2px solid #e2e8f0;border-radius:10px;font-size:0.9rem;transition:border-color 0.2s;font-family:inherit;background:#fff}
         .form-group input:focus,.form-group select:focus{outline:none;border-color:#f59e0b}
-        .drop-zone{border:2px dashed #cbd5e1;border-radius:12px;padding:28px;text-align:center;cursor:pointer;transition:all 0.2s;background:#f8fafc;position:relative}
-        .drop-zone:hover,.drop-zone.dragover{border-color:#f59e0b;background:#fffbeb}
-        .drop-zone input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
-        .drop-zone .dz-icon{font-size:2.2rem;margin-bottom:8px}
-        .drop-zone p{color:#64748b;font-size:0.88rem;margin:0}
-        .drop-zone .dz-name{color:#f59e0b;font-weight:600;font-size:0.9rem;margin-top:6px;display:none}
         .btn{display:inline-flex;align-items:center;gap:7px;padding:10px 20px;border:none;border-radius:10px;cursor:pointer;font-size:0.9rem;font-weight:600;text-decoration:none;transition:all 0.2s}
         .btn-primary{background:linear-gradient(135deg,#f59e0b,#d97706);color:#fff}
         .btn-primary:hover{transform:translateY(-2px);box-shadow:0 6px 15px rgba(245,158,11,0.35)}
@@ -142,8 +110,6 @@ $conn->close();
         th{background:#f8fafc;color:#475569;font-weight:700;font-size:0.78rem;text-transform:uppercase;letter-spacing:0.5px}
         tr:hover td{background:#f8fafc}
         .cert-num{font-family:'Courier New',monospace;font-size:0.82rem;color:#64748b}
-        .pdf-link{display:inline-flex;align-items:center;gap:5px;color:#f59e0b;text-decoration:none;font-size:0.82rem;font-weight:600}
-        .pdf-link:hover{text-decoration:underline}
         .sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:150}
         .sidebar-overlay.active{display:block}
         .info-note{background:#fffbeb;border:1px solid #fde68a;border-radius:10px;padding:12px 16px;font-size:0.85rem;color:#92400e;margin-bottom:18px;display:flex;align-items:flex-start;gap:8px}
@@ -199,9 +165,9 @@ $conn->close();
             <div class="card">
                 <h3>🎖️ Issue New Certificate</h3>
                 <div class="info-note">
-                    ℹ️ Upload the student's completed certificate as a PDF. Once issued, it will appear on their portal and they will receive a notification.
+                    ℹ️ Once issued, the certificate will appear on the student's portal and they will receive a notification.
                 </div>
-                <form method="post" enctype="multipart/form-data">
+                <form method="post">
                     <div class="form-grid">
                         <div class="form-group">
                             <label>Student *</label>
@@ -226,15 +192,6 @@ $conn->close();
                             <input type="date" name="issue_date" required value="<?php echo date('Y-m-d'); ?>">
                         </div>
                     </div>
-                    <div class="form-group" style="margin-bottom:20px">
-                        <label>Certificate PDF * (max 20 MB)</label>
-                        <div class="drop-zone" id="dropZone">
-                            <input type="file" name="cert_pdf" id="certPdf" accept=".pdf">
-                            <div class="dz-icon">📄</div>
-                            <p>Drag & drop the certificate PDF here, or <strong>click to browse</strong></p>
-                            <div class="dz-name" id="dzName"></div>
-                        </div>
-                    </div>
                     <button type="submit" name="issue_cert" class="btn btn-primary">🏆 Issue & Deploy Certificate</button>
                 </form>
             </div>
@@ -244,7 +201,7 @@ $conn->close();
                 <div class="table-wrap">
                     <table>
                         <thead>
-                            <tr><th>Certificate #</th><th>Student</th><th>Course</th><th>Level</th><th>Issue Date</th><th>PDF</th><th>Action</th></tr>
+                            <tr><th>Certificate #</th><th>Student</th><th>Course</th><th>Level</th><th>Issue Date</th><th>Action</th></tr>
                         </thead>
                         <tbody>
                         <?php if ($certs_list && $certs_list->num_rows > 0): ?>
@@ -256,13 +213,6 @@ $conn->close();
                                 <td>Level <?php echo $cert['level_number']; ?></td>
                                 <td><?php echo date('M d, Y', strtotime($cert['issue_date'])); ?></td>
                                 <td>
-                                    <?php if ($cert['pdf_path']): ?>
-                                        <a href="<?php echo htmlspecialchars($cert['pdf_path']); ?>" target="_blank" class="pdf-link">📄 View PDF</a>
-                                    <?php else: ?>
-                                        <span style="color:#cbd5e1;font-size:0.82rem">No PDF</span>
-                                    <?php endif; ?>
-                                </td>
-                                <td>
                                     <form method="post" onsubmit="return confirm('Revoke this certificate?')">
                                         <input type="hidden" name="cert_id" value="<?php echo $cert['id']; ?>">
                                         <button type="submit" name="revoke_cert" class="btn btn-danger btn-sm">🗑️ Revoke</button>
@@ -271,7 +221,7 @@ $conn->close();
                             </tr>
                             <?php endwhile; ?>
                         <?php else: ?>
-                            <tr><td colspan="7" style="text-align:center;padding:40px;color:#94a3b8">No certificates issued yet.</td></tr>
+                            <tr><td colspan="6" style="text-align:center;padding:40px;color:#94a3b8">No certificates issued yet.</td></tr>
                         <?php endif; ?>
                         </tbody>
                     </table>
@@ -285,21 +235,7 @@ function toggleSidebar(){
     document.getElementById('sidebar').classList.toggle('open');
     document.getElementById('overlay').classList.toggle('active');
 }
-const certInput = document.getElementById('certPdf');
-const dzName    = document.getElementById('dzName');
-const dropZone  = document.getElementById('dropZone');
-certInput.addEventListener('change', () => {
-    if (certInput.files[0]) { dzName.textContent = '✅ ' + certInput.files[0].name; dzName.style.display = 'block'; }
-});
-dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('dragover'); });
-dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
-dropZone.addEventListener('drop', e => {
-    e.preventDefault(); dropZone.classList.remove('dragover');
-    if (e.dataTransfer.files[0]) {
-        certInput.files = e.dataTransfer.files;
-        dzName.textContent = '✅ ' + e.dataTransfer.files[0].name; dzName.style.display = 'block';
-    }
-});
+
 </script>
 </body>
 </html>
