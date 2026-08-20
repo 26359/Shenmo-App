@@ -21,11 +21,11 @@ $conn->close();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard - Abacus Academy</title>
-    <link rel="manifest" href="/shenmo_app1/manifest.json">
+    <link rel="manifest" href="/manifest.json">
     <meta name="theme-color" content="#1e293b">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-title" content="Shenmo">
-    <link rel="apple-touch-icon" href="/shenmo_app1/icons/icon-192.png">
+    <link rel="apple-touch-icon" href="/icons/icon-192.png">
     <style>
         *{box-sizing:border-box;margin:0;padding:0}
         body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#f1f5f9;min-height:100vh}
