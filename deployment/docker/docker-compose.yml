@@ -1,0 +1,103 @@
+version: '3.8'
+
+services:
+  # Nginx Web Server
+  nginx:
+    image: nginx:1.25-alpine
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./:/var/www/shenmo_app1:ro
+      - ./deployment/nginx/shenmo:/etc/nginx/conf.d/default.conf:ro
+      - ./deployment/nginx/ssl:/etc/nginx/ssl:ro
+      - nginx-logs:/var/log/nginx
+    depends_on:
+      - php
+    restart: unless-stopped
+    networks:
+      - shenmo-network
+
+  # PHP-FPM Application Server
+  php:
+    build:
+      context: .
+      dockerfile: deployment/docker/php/Dockerfile
+    volumes:
+      - ./:/var/www/shenmo_app1:ro
+      - php-sessions:/var/lib/php/sessions
+    environment:
+      - DB_HOST=mysql
+      - DB_NAME=shenmo_app
+      - DB_USER=shenmo_user
+      - DB_PASS=${DB_PASS:-shenmo_secure_pass}
+      - APP_URL=${APP_URL:-https://localhost}
+    depends_on:
+      - mysql
+    restart: unless-stopped
+    networks:
+      - shenmo-network
+
+  # MySQL Database
+  mysql:
+    image: mysql:8.0
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - ./deployment/database/init:/docker-entrypoint-initdb.d:ro
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASS:-root_secure_pass}
+      - MYSQL_DATABASE=shenmo_app
+      - MYSQL_USER=shenmo_user
+      - MYSQL_PASSWORD=${DB_PASS:-shenmo_secure_pass}
+    restart: unless-stopped
+    networks:
+      - shenmo-network
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+
+  # phpMyAdmin (optional, for database management)
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:5.2
+    ports:
+      - "8080:80"
+    environment:
+      - PMA_HOST=mysql
+      - PMA_USER=shenmo_user
+      - PMA_PASSWORD=${DB_PASS:-shenmo_secure_pass}
+    depends_on:
+      - mysql
+    restart: unless-stopped
+    networks:
+      - shenmo-network
+    profiles:
+      - tools
+
+  # Netdata Monitoring
+  netdata:
+    image: netdata/netdata:stable
+    ports:
+      - "19999:19999"
+    volumes:
+      - /:/host/root:ro
+      - netdata-config:/etc/netdata
+      - netdata-data:/var/lib/netdata
+    cap_add:
+      - SYS_PTRACE
+      - SYS_ADMIN
+    restart: unless-stopped
+    networks:
+      - shenmo-network
+    profiles:
+      - monitoring
+
+volumes:
+  mysql-data:
+  php-sessions:
+  nginx-logs:
+  netdata-config:
+  netdata-data:
+
+networks:
+  shenmo-network:
+    driver: bridge

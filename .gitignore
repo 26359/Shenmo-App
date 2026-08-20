@@ -1,0 +1,15 @@
+# Sensitive config
+config/database.php
+config/mail.php
+
+# Uploads
+uploads/homework/
+uploads/certificates/
+uploads/submissions/
+
+# Environment
+.env
+
+# OS
+.DS_Store
+Thumbs.db
