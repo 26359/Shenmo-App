@@ -1,6 +1,6 @@
 <?php
 // Run once to add file columns — safe to run multiple times
-$conn = new mysqli("localhost", "root", "", "shenmo_app");
+$conn = new mysqli("fdb1028.awardspace.net", "4783798_shenmoapp", "muganwa123", "4783798_shenmoapp");
 if ($conn->connect_error) die("Connection failed: " . $conn->connect_error);
 
 $migrations = [

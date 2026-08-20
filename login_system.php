@@ -2,10 +2,10 @@
 session_start();
 
 // Database connection
-$host = "localhost";
-$dbname = "shenmo_app";
-$user = "root";
-$pass = "";
+$host = "fdb1028.awardspace.net";
+$dbname = "4783798_shenmoapp";
+$user = "4783798_shenmoapp";
+$pass = "muganwa123";
 $error = "";
 
 // Handle login

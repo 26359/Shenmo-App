@@ -5,7 +5,7 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
     exit;
 }
 
-$host = "localhost"; $dbname = "shenmo_app"; $user = "root"; $pass = "";
+$host = "fdb1028.awardspace.net"; $dbname = "4783798_shenmoapp"; $user = "4783798_shenmoapp"; $pass = "muganwa123";
 $conn = new mysqli($host, $user, $pass, $dbname);
 if ($conn->connect_error) die("Connection failed: " . $conn->connect_error);
 
