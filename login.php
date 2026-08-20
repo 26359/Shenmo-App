@@ -51,43 +51,35 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $message = "Please fill in all fields.";
     } else {
         if ($role == 'admin') {
-            $sql = "SELECT user_id, user_names, email_verified FROM shenmo_user WHERE user_names = ? AND user_password = ?";
+            $sql = "SELECT user_id, user_names FROM shenmo_user WHERE user_names = ? AND user_password = ?";
             $stmt = $conn->prepare($sql);
             $stmt->bind_param("ss", $username, $password);
             $stmt->execute();
             $result = $stmt->get_result();
 
             if ($row = $result->fetch_assoc()) {
-                if (!$row['email_verified']) {
-                    $message = "Please verify your email before logging in. <a href='resend_verification.php?email=" . urlencode($username) . "&type=admin' style='color: #667eea; font-weight: bold;'>Resend verification email</a>";
-                } else {
-                    $_SESSION['role'] = 'admin';
-                    $_SESSION['user_id'] = $row['user_id'];
-                    $_SESSION['user_names'] = $row['user_names'];
-                    header("Location: admin_dashboard.php");
-                    exit;
-                }
+                $_SESSION['role'] = 'admin';
+                $_SESSION['user_id'] = $row['user_id'];
+                $_SESSION['user_names'] = $row['user_names'];
+                header("Location: admin_dashboard.php");
+                exit;
             } else {
                 $message = "Invalid admin credentials.";
             }
             $stmt->close();
         } elseif ($role == 'student') {
-            $sql = "SELECT student_id, full_name, email_verified FROM students WHERE username = ? AND password = ?";
+            $sql = "SELECT student_id, full_name FROM students WHERE username = ? AND password = ?";
             $stmt = $conn->prepare($sql);
             $stmt->bind_param("ss", $username, $password);
             $stmt->execute();
             $result = $stmt->get_result();
 
             if ($row = $result->fetch_assoc()) {
-                if (!$row['email_verified']) {
-                    $message = "Please verify your email before logging in. <a href='resend_verification.php?email=" . urlencode($username) . "&type=student' style='color: #667eea; font-weight: bold;'>Resend verification email</a>";
-                } else {
-                    $_SESSION['role'] = 'student';
-                    $_SESSION['student_id'] = $row['student_id'];
-                    $_SESSION['full_name'] = $row['full_name'];
-                    header("Location: student_dashboard.php");
-                    exit;
-                }
+                $_SESSION['role'] = 'student';
+                $_SESSION['student_id'] = $row['student_id'];
+                $_SESSION['full_name'] = $row['full_name'];
+                header("Location: student_dashboard.php");
+                exit;
             } else {
                 $message = "Invalid student credentials.";
             }
