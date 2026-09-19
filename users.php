@@ -6,11 +6,15 @@ $user = "4783798_shenmoapp";
 $pass = "muganwa123";
 
 // Connect to MySQL
-$conn = new mysqli($host, $user, $pass, $dbname);
+try {
+    $conn = new mysqli($host, $user, $pass, $dbname);
 
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+    // Check connection
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
+} catch (mysqli_sql_exception $e) {
+    die("Connection failed: " . $e->getMessage());
 }
 
 // Fetch users

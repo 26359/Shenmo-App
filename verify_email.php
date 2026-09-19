@@ -8,9 +8,13 @@ $dbname = "4783798_shenmoapp";
 $user = "4783798_shenmoapp";
 $pass = "muganwa123";
 
-$conn = new mysqli($host, $user, $pass, $dbname);
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+try {
+    $conn = new mysqli($host, $user, $pass, $dbname);
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
+} catch (mysqli_sql_exception $e) {
+    die("Connection failed: " . $e->getMessage());
 }
 
 $token = $_GET['token'] ?? '';

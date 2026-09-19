@@ -10,7 +10,11 @@ $error = "";
 
 // Handle login
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['login'])) {
-    $conn = new mysqli($host, $user, $pass, $dbname);
+    try {
+        $conn = new mysqli($host, $user, $pass, $dbname);
+    } catch (mysqli_sql_exception $e) {
+        die("Connection failed: " . $e->getMessage());
+    }
     
     if (!$conn->connect_error) {
         $username = $_POST['user_names'];
@@ -54,7 +58,11 @@ $loggedin = isset($_SESSION['loggedin']) && $_SESSION['loggedin'];
 // Fetch all users for table display
 $users = [];
 if ($loggedin) {
-    $conn = new mysqli($host, $user, $pass, $dbname);
+    try {
+        $conn = new mysqli($host, $user, $pass, $dbname);
+    } catch (mysqli_sql_exception $e) {
+        die("Connection failed: " . $e->getMessage());
+    }
     if (!$conn->connect_error) {
         $result = $conn->query("SELECT user_id, user_names, user_country, user_city, use_telephone, user_birthdate FROM shenmo_user");
         $users = $result->fetch_all(MYSQLI_ASSOC);

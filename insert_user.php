@@ -8,7 +8,11 @@ $message = "";
 
 // Handle form submission
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $conn = new mysqli($host, $user, $pass, $dbname);
+    try {
+        $conn = new mysqli($host, $user, $pass, $dbname);
+    } catch (mysqli_sql_exception $e) {
+        die("Connection failed: " . $e->getMessage());
+    }
     
     if ($conn->connect_error) {
         $message = "Connection failed: " . $conn->connect_error;
