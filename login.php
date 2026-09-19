@@ -6,41 +6,47 @@ $dbname = "4783798_shenmoapp";
 $user = "4783798_shenmoapp";
 $pass = "muganwa123";
 
-$conn = new mysqli($host, $user, $pass, $dbname);
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
-
-$conn->query("CREATE TABLE IF NOT EXISTS students (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    student_id VARCHAR(50) UNIQUE NOT NULL,
-    full_name VARCHAR(100) NOT NULL,
-    grade_level VARCHAR(10) NOT NULL,
-    email VARCHAR(100) NOT NULL,
-    phone VARCHAR(20) NOT NULL,
-    dob DATE,
-    address TEXT,
-    username VARCHAR(50) NOT NULL DEFAULT '',
-    password VARCHAR(255) NOT NULL DEFAULT '',
-    email_verified TINYINT(1) DEFAULT 0,
-    verification_token VARCHAR(255) DEFAULT NULL,
-    verification_expires DATETIME DEFAULT NULL
-)");
-
-$check_username = $conn->query("SHOW COLUMNS FROM students LIKE 'username'");
-if ($check_username->num_rows == 0) {
-    $conn->query("ALTER TABLE students ADD COLUMN username VARCHAR(50) NOT NULL DEFAULT ''");
-    $conn->query("ALTER TABLE students ADD COLUMN password VARCHAR(255) NOT NULL DEFAULT ''");
-}
-
-$check_verified = $conn->query("SHOW COLUMNS FROM students LIKE 'email_verified'");
-if ($check_verified->num_rows == 0) {
-    $conn->query("ALTER TABLE students ADD COLUMN email_verified TINYINT(1) DEFAULT 0");
-    $conn->query("ALTER TABLE students ADD COLUMN verification_token VARCHAR(255) DEFAULT NULL");
-    $conn->query("ALTER TABLE students ADD COLUMN verification_expires DATETIME DEFAULT NULL");
-}
-
 $message = "";
+$conn = null;
+try {
+    $conn = new mysqli($host, $user, $pass, $dbname);
+    if ($conn->connect_error) {
+        $message = "Connection failed: " . $conn->connect_error;
+    }
+} catch (mysqli_sql_exception $e) {
+    $message = "Database unavailable: " . $e->getMessage();
+}
+
+if ($conn && !$conn->connect_error) {
+    $conn->query("CREATE TABLE IF NOT EXISTS students (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        student_id VARCHAR(50) UNIQUE NOT NULL,
+        full_name VARCHAR(100) NOT NULL,
+        grade_level VARCHAR(10) NOT NULL,
+        email VARCHAR(100) NOT NULL,
+        phone VARCHAR(20) NOT NULL,
+        dob DATE,
+        address TEXT,
+        username VARCHAR(50) NOT NULL DEFAULT '',
+        password VARCHAR(255) NOT NULL DEFAULT '',
+        email_verified TINYINT(1) DEFAULT 0,
+        verification_token VARCHAR(255) DEFAULT NULL,
+        verification_expires DATETIME DEFAULT NULL
+    )");
+
+    $check_username = $conn->query("SHOW COLUMNS FROM students LIKE 'username'");
+    if ($check_username->num_rows == 0) {
+        $conn->query("ALTER TABLE students ADD COLUMN username VARCHAR(50) NOT NULL DEFAULT ''");
+        $conn->query("ALTER TABLE students ADD COLUMN password VARCHAR(255) NOT NULL DEFAULT ''");
+    }
+
+    $check_verified = $conn->query("SHOW COLUMNS FROM students LIKE 'email_verified'");
+    if ($check_verified->num_rows == 0) {
+        $conn->query("ALTER TABLE students ADD COLUMN email_verified TINYINT(1) DEFAULT 0");
+        $conn->query("ALTER TABLE students ADD COLUMN verification_token VARCHAR(255) DEFAULT NULL");
+        $conn->query("ALTER TABLE students ADD COLUMN verification_expires DATETIME DEFAULT NULL");
+    }
+}
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $role = $_POST['role'];
@@ -49,6 +55,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if (empty($role) || empty($username) || empty($password)) {
         $message = "Please fill in all fields.";
+    } elseif (!$conn || $conn->connect_error) {
+        $message = "Database unavailable. Please try again later.";
     } else {
         if ($role == 'admin') {
             $sql = "SELECT user_id, user_names FROM shenmo_user WHERE user_names = ? AND user_password = ?";
@@ -87,7 +95,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
 }
-$conn->close();
+
+if ($conn && !$conn->connect_error) {
+    $conn->close();
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
