@@ -108,7 +108,7 @@ $conn->close();
         .nav-menu{list-style:none;padding:0 10px}
         .nav-item{margin-bottom:3px}
         .nav-link{display:flex;align-items:center;gap:12px;padding:11px 14px;color:#94a3b8;text-decoration:none;border-radius:10px;transition:all 0.2s;font-size:0.9rem;font-weight:500}
-        .nav-link:hover,.nav-link.active{background:rgba(59,130,246,0.2);color:#60a5fa}
+        .nav-link:hover,.nav-link.active{background:rgba(239,68,68,0.2);color:#f87171}
         .nav-link .icon{font-size:1.1rem;width:22px;text-align:center}
         .nav-badge{margin-left:auto;background:#ef4444;color:#fff;font-size:0.7rem;padding:2px 7px;border-radius:10px;font-weight:700}
         .main{flex:1;margin-left:260px;display:flex;flex-direction:column}
@@ -122,11 +122,11 @@ $conn->close();
         .form-group{display:flex;flex-direction:column;gap:6px}
         .form-group label{font-size:0.85rem;font-weight:600;color:#475569}
         .form-group input,.form-group select,.form-group textarea{padding:10px 14px;border:2px solid #e2e8f0;border-radius:10px;font-size:0.9rem;transition:border-color 0.2s;font-family:inherit;background:#fff}
-        .form-group input:focus,.form-group select:focus,.form-group textarea:focus{outline:none;border-color:#3b82f6}
+        .form-group input:focus,.form-group select:focus,.form-group textarea:focus{outline:none;border-color:#ef4444}
         .form-group textarea{resize:vertical;min-height:80px}
         .btn{display:inline-flex;align-items:center;gap:7px;padding:10px 20px;border:none;border-radius:10px;cursor:pointer;font-size:0.9rem;font-weight:600;text-decoration:none;transition:all 0.2s}
-        .btn-primary{background:linear-gradient(135deg,#3b82f6,#8b5cf6);color:#fff}
-        .btn-primary:hover{transform:translateY(-2px);box-shadow:0 6px 15px rgba(59,130,246,0.35)}
+        .btn-primary{background:linear-gradient(135deg,#ef4444,#dc2626);color:#fff}
+        .btn-primary:hover{transform:translateY(-2px);box-shadow:0 6px 15px rgba(239,68,68,0.35)}
         .btn-danger{background:linear-gradient(135deg,#ef4444,#f97316);color:#fff}
         .btn-danger:hover{transform:translateY(-2px);box-shadow:0 6px 15px rgba(239,68,68,0.35)}
         .btn-success{background:linear-gradient(135deg,#10b981,#34d399);color:#fff}
@@ -142,10 +142,10 @@ $conn->close();
         tr:hover td{background:#f8fafc}
         .badge{display:inline-block;padding:4px 10px;border-radius:20px;font-size:0.75rem;font-weight:600}
         .badge-pending{background:#fef3c7;color:#92400e}
-        .badge-submitted{background:#dbeafe;color:#1e40af}
+        .badge-submitted{background:#fee2e2;color:#991b1b}
         .badge-graded{background:#d1fae5;color:#065f46}
         .badge-late{background:#fee2e2;color:#991b1b}
-        .file-link{display:inline-flex;align-items:center;gap:5px;color:#3b82f6;text-decoration:none;font-size:0.82rem;font-weight:600}
+        .file-link{display:inline-flex;align-items:center;gap:5px;color:#ef4444;text-decoration:none;font-size:0.82rem;font-weight:600}
         .file-link:hover{text-decoration:underline}
         .sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:150}
         .sidebar-overlay.active{display:block}

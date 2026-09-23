@@ -66,7 +66,7 @@ $conn->close();
         .nav-menu{list-style:none;padding:0 10px}
         .nav-item{margin-bottom:3px}
         .nav-link{display:flex;align-items:center;gap:12px;padding:11px 14px;color:#94a3b8;text-decoration:none;border-radius:10px;transition:all 0.2s;font-size:0.9rem;font-weight:500}
-        .nav-link:hover,.nav-link.active{background:rgba(59,130,246,0.2);color:#60a5fa}
+        .nav-link:hover,.nav-link.active{background:rgba(239,68,68,0.2);color:#f87171}
         .nav-link .icon{font-size:1.1rem;width:22px;text-align:center}
         .nav-badge{margin-left:auto;background:#ef4444;color:#fff;font-size:0.7rem;padding:2px 7px;border-radius:10px;font-weight:700}
         .main{flex:1;margin-left:260px;display:flex;flex-direction:column}
@@ -86,13 +86,13 @@ $conn->close();
         /* TABS */
         .tabs{display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap}
         .tab-btn{padding:9px 18px;border:2px solid #e2e8f0;border-radius:10px;background:#fff;cursor:pointer;font-size:0.88rem;font-weight:600;color:#475569;transition:all 0.2s}
-        .tab-btn.active{background:linear-gradient(135deg,#3b82f6,#8b5cf6);color:#fff;border-color:transparent}
+        .tab-btn.active{background:linear-gradient(135deg,#ef4444,#dc2626);color:#fff;border-color:transparent}
 
         .card{background:#fff;padding:25px;border-radius:14px;box-shadow:0 2px 8px rgba(0,0,0,0.06);border:1px solid #e2e8f0;margin-bottom:24px}
         .card h3{color:#1e293b;font-size:1.1rem;font-weight:700;margin-bottom:18px;display:flex;align-items:center;gap:8px}
         .filter-bar{display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap}
         .filter-bar input,.filter-bar select{padding:9px 14px;border:2px solid #e2e8f0;border-radius:10px;font-size:0.88rem;transition:border-color 0.2s;font-family:inherit}
-        .filter-bar input:focus,.filter-bar select:focus{outline:none;border-color:#3b82f6}
+        .filter-bar input:focus,.filter-bar select:focus{outline:none;border-color:#ef4444}
         .table-wrap{overflow-x:auto;border-radius:10px}
         table{width:100%;border-collapse:collapse;min-width:650px}
         th,td{padding:12px 14px;text-align:left;border-bottom:1px solid #f1f5f9;font-size:0.88rem}
@@ -102,7 +102,7 @@ $conn->close();
         .badge-completed{background:#d1fae5;color:#065f46}
         .badge-pending{background:#fef3c7;color:#92400e}
         .badge-failed{background:#fee2e2;color:#991b1b}
-        .badge-refunded{background:#dbeafe;color:#1e40af}
+        .badge-refunded{background:#fee2e2;color:#991b1b}
         .btn{display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border:none;border-radius:8px;cursor:pointer;font-size:0.82rem;font-weight:600;text-decoration:none;transition:all 0.2s}
         .btn-success{background:linear-gradient(135deg,#10b981,#34d399);color:#fff}
         .btn-success:hover{transform:translateY(-1px);box-shadow:0 4px 10px rgba(16,185,129,0.35)}

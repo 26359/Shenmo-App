@@ -30,14 +30,14 @@ if (empty($token) || empty($type)) {
     } else {
         $error = "Invalid verification type.";
     }
-    
+
     if (empty($error)) {
         $stmt->bind_param("s", $token);
         $stmt->execute();
         $result = $stmt->get_result();
         $user = $result->fetch_assoc();
         $stmt->close();
-        
+
         if (!$user) {
             $error = "Invalid verification token.";
         } elseif ($user['email_verified']) {
@@ -53,7 +53,7 @@ if (empty($token) || empty($type)) {
             $update->bind_param("s", $token);
             $update->execute();
             $update->close();
-            
+
             $message = "Email verified successfully! You can now login to your account.";
         }
     }
@@ -68,16 +68,16 @@ $conn->close();
     <title>Email Verification - Abacus Academy</title>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { 
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
-            min-height: 100vh; 
-            display: flex; 
-            justify-content: center; 
-            align-items: center; 
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             padding: 20px;
         }
-        
+
         .verify-card {
             background: white;
             padding: 45px 40px;
@@ -88,22 +88,22 @@ $conn->close();
             text-align: center;
             animation: slideUp 0.5s;
         }
-        @keyframes slideUp { 
-            from { opacity: 0; transform: translateY(40px); } 
-            to { opacity: 1; transform: translateY(0); } 
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
         }
-        
+
         .logo {
             font-size: 4rem;
             margin-bottom: 20px;
         }
-        
-        h1 { 
-            color: #2d3748; 
-            margin-bottom: 15px; 
-            font-size: 1.8rem; 
+
+        h1 {
+            color: #2d3748;
+            margin-bottom: 15px;
+            font-size: 1.8rem;
         }
-        
+
         .message {
             padding: 16px 20px;
             border-radius: 12px;
@@ -111,19 +111,19 @@ $conn->close();
             font-weight: 600;
             font-size: 0.95rem;
         }
-        
-        .message.success { 
-            background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%); 
-            color: #155724; 
-            border: 1px solid #c3e6cb; 
+
+        .message.success {
+            background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+            color: #155724;
+            border: 1px solid #c3e6cb;
         }
-        
-        .message.error { 
-            background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%); 
-            color: #721c24; 
-            border: 1px solid #f5c6cb; 
+
+        .message.error {
+            background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%);
+            color: #721c24;
+            border: 1px solid #f5c6cb;
         }
-        
+
         .btn {
             display: inline-flex;
             align-items: center;
@@ -139,15 +139,15 @@ $conn->close();
             transition: all 0.3s;
             margin-top: 20px;
         }
-        
-        .btn-primary { 
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
-            color: white; 
+
+        .btn-primary {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            color: white;
         }
-        
-        .btn-primary:hover { 
-            transform: translateY(-2px); 
-            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4); 
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(239,68,68, 0.4);
         }
     </style>
 </head>
@@ -155,15 +155,15 @@ $conn->close();
     <div class="verify-card">
         <div class="logo">📧</div>
         <h1>Email Verification</h1>
-        
+
         <?php if ($message): ?>
             <div class="message success"><?php echo $message; ?></div>
         <?php endif; ?>
-        
+
         <?php if ($error): ?>
             <div class="message error"><?php echo $error; ?></div>
         <?php endif; ?>
-        
+
         <a href="login.php" class="btn btn-primary">Go to Login</a>
     </div>
 </body>

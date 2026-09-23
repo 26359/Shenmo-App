@@ -22,7 +22,7 @@ try {
 $student_id = $_SESSION['student_id'];
 
 $progress_result = $conn->query("
-    SELECT 
+    SELECT
         COUNT(DISTINCT e.course_id) as enrolled_courses,
         COUNT(DISTINCT l.id) as total_lessons,
         COUNT(DISTINCT CASE WHEN sp.is_completed = 1 THEN l.id END) as completed_lessons,
@@ -46,7 +46,7 @@ $progress_result = $conn->query("
 $progress_stats = $progress_result->fetch_assoc();
 
 $weekly_activity = $conn->query("
-    SELECT 
+    SELECT
         DATE(created_at) as activity_date,
         COUNT(*) as activity_count
     FROM xp_points
@@ -67,9 +67,9 @@ $conn->close();
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f8fafc; min-height: 100vh; }
-        
+
         .dashboard { display: flex; min-height: 100vh; }
-        
+
         .sidebar {
             width: 260px;
             background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
@@ -81,15 +81,15 @@ $conn->close();
             box-shadow: 2px 0 10px rgba(0,0,0,0.05);
             z-index: 100;
         }
-        
+
         .logo {
             text-align: center;
             padding: 20px;
             border-bottom: 1px solid #e2e8f0;
             margin-bottom: 20px;
         }
-        .logo h1 { color: #3b82f6; font-size: 1.5rem; font-weight: 700; }
-        
+        .logo h1 { color: #ef4444; font-size: 1.5rem; font-weight: 700; }
+
         .nav-menu { list-style: none; padding: 0 10px; }
         .nav-item { margin-bottom: 5px; }
         .nav-link {
@@ -105,14 +105,14 @@ $conn->close();
             font-size: 0.95rem;
         }
         .nav-link:hover, .nav-link.active {
-            background: linear-gradient(135deg, #dbeafe 0%, #e0e7ff 100%);
-            color: #3b82f6;
+            background: linear-gradient(135deg, #fee2e2 0%, #fef2f2 100%);
+            color: #ef4444;
             transform: translateX(5px);
         }
         .nav-link .icon { font-size: 1.2rem; width: 24px; text-align: center; }
-        
+
         .main-content { flex: 1; margin-left: 260px; padding: 30px; }
-        
+
         .header {
             display: flex;
             justify-content: space-between;
@@ -123,17 +123,17 @@ $conn->close();
             border-radius: 16px;
             box-shadow: 0 2px 10px rgba(0,0,0,0.05);
         }
-        
+
         .header-title h2 { color: #1e293b; font-size: 1.8rem; font-weight: 700; }
         .header-title p { color: #64748b; font-size: 0.95rem; margin-top: 5px; }
-        
+
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
             gap: 20px;
             margin-bottom: 30px;
         }
-        
+
         .stat-card {
             background: white;
             padding: 25px;
@@ -147,7 +147,7 @@ $conn->close();
             transform: translateY(-5px);
             box-shadow: 0 10px 25px rgba(0,0,0,0.1);
         }
-        
+
         .stat-value {
             font-size: 2rem;
             font-weight: 700;
@@ -159,7 +159,7 @@ $conn->close();
             font-size: 0.9rem;
             font-weight: 500;
         }
-        
+
         .progress-section {
             background: white;
             padding: 30px;
@@ -168,14 +168,14 @@ $conn->close();
             border: 1px solid #e2e8f0;
             margin-bottom: 30px;
         }
-        
+
         .section-title {
             font-size: 1.3rem;
             font-weight: 700;
             color: #1e293b;
             margin-bottom: 20px;
         }
-        
+
         .progress-bar {
             width: 100%;
             height: 12px;
@@ -186,18 +186,18 @@ $conn->close();
         }
         .progress-fill {
             height: 100%;
-            background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
             border-radius: 6px;
             transition: width 0.5s ease;
         }
-        
+
         .progress-item {
             margin-bottom: 20px;
         }
         .progress-item:last-child {
             margin-bottom: 0;
         }
-        
+
         .progress-label {
             display: flex;
             justify-content: space-between;
@@ -206,7 +206,7 @@ $conn->close();
             color: #475569;
             font-weight: 500;
         }
-        
+
         .activity-chart {
             display: flex;
             align-items: flex-end;
@@ -217,10 +217,10 @@ $conn->close();
             min-width: 0;
         }
         .activity-bar-wrap { flex: 1; min-width: 32px; display: flex; flex-direction: column; align-items: center; }
-        
+
         .activity-bar {
             flex: 1;
-            background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
             border-radius: 8px 8px 0 0;
             min-height: 10px;
             transition: all 0.3s;
@@ -230,14 +230,14 @@ $conn->close();
             transform: scaleY(1.05);
             filter: brightness(1.1);
         }
-        
+
         .activity-label {
             text-align: center;
             font-size: 0.8rem;
             color: #64748b;
             margin-top: 10px;
         }
-        
+
         @media (max-width: 768px) {
             .sidebar { transform: translateX(-100%); width: 260px; position: fixed; }
             .sidebar.open { transform: translateX(0); }
@@ -259,7 +259,7 @@ $conn->close();
                 <h1>🎓 Abacus Academy</h1>
                 <p>Learning Portal</p>
             </div>
-            
+
             <ul class="nav-menu">
                 <li class="nav-item">
                     <a href="student_dashboard.php" class="nav-link">
@@ -365,7 +365,7 @@ $conn->close();
                 </li>
             </ul>
         </aside>
-        
+
         <main class="main-content">
             <div class="header">
                 <div class="header-title" style="display:flex;align-items:center;gap:12px">
@@ -376,7 +376,7 @@ $conn->close();
                     </div>
                 </div>
             </div>
-            
+
             <div class="stats-grid">
                 <div class="stat-card">
                     <div class="stat-value"><?php echo $progress_stats['enrolled_courses'] ?? 0; ?></div>
@@ -403,7 +403,7 @@ $conn->close();
                     <div class="stat-label">Attendance</div>
                 </div>
             </div>
-            
+
             <div class="progress-section">
                 <div class="section-title">📊 Weekly Activity</div>
                 <div class="activity-chart">
@@ -413,7 +413,7 @@ $conn->close();
                     while ($row = $weekly_activity->fetch_assoc()) {
                         $activity_data[$row['activity_date']] = $row['activity_count'];
                     }
-                    
+
                     for ($i = 6; $i >= 0; $i--) {
                         $date = date('Y-m-d', strtotime("-$i days"));
                         $count = $activity_data[$date] ?? 0;
@@ -426,10 +426,10 @@ $conn->close();
                     <?php } ?>
                 </div>
             </div>
-            
+
             <div class="progress-section">
                 <div class="section-title">📈 Overall Progress</div>
-                
+
                 <div class="progress-item">
                     <div class="progress-label">
                         <span>Lessons Completion</span>
@@ -439,7 +439,7 @@ $conn->close();
                         <div class="progress-fill" style="width: <?php echo $progress_stats['total_lessons'] > 0 ? round(($progress_stats['completed_lessons'] / $progress_stats['total_lessons']) * 100) : 0; ?>%"></div>
                     </div>
                 </div>
-                
+
                 <div class="progress-item">
                     <div class="progress-label">
                         <span>Homework Completion</span>
@@ -449,7 +449,7 @@ $conn->close();
                         <div class="progress-fill" style="width: <?php echo $progress_stats['total_homework'] > 0 ? round(($progress_stats['completed_homework'] / $progress_stats['total_homework']) * 100) : 0; ?>%"></div>
                     </div>
                 </div>
-                
+
                 <div class="progress-item">
                     <div class="progress-label">
                         <span>Exam Performance</span>

@@ -52,9 +52,9 @@ $conn->close();
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f8fafc; min-height: 100vh; }
-        
+
         .dashboard { display: flex; min-height: 100vh; }
-        
+
         .sidebar {
             width: 260px;
             background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
@@ -66,15 +66,15 @@ $conn->close();
             box-shadow: 2px 0 10px rgba(0,0,0,0.05);
             z-index: 100;
         }
-        
+
         .logo {
             text-align: center;
             padding: 20px;
             border-bottom: 1px solid #e2e8f0;
             margin-bottom: 20px;
         }
-        .logo h1 { color: #3b82f6; font-size: 1.5rem; font-weight: 700; }
-        
+        .logo h1 { color: #ef4444; font-size: 1.5rem; font-weight: 700; }
+
         .nav-menu { list-style: none; padding: 0 10px; }
         .nav-item { margin-bottom: 5px; }
         .nav-link {
@@ -90,14 +90,14 @@ $conn->close();
             font-size: 0.95rem;
         }
         .nav-link:hover, .nav-link.active {
-            background: linear-gradient(135deg, #dbeafe 0%, #e0e7ff 100%);
-            color: #3b82f6;
+            background: linear-gradient(135deg, #fee2e2 0%, #fef2f2 100%);
+            color: #ef4444;
             transform: translateX(5px);
         }
         .nav-link .icon { font-size: 1.2rem; width: 24px; text-align: center; }
-        
+
         .main-content { flex: 1; margin-left: 260px; padding: 30px; }
-        
+
         .header {
             display: flex;
             justify-content: space-between;
@@ -108,16 +108,16 @@ $conn->close();
             border-radius: 16px;
             box-shadow: 0 2px 10px rgba(0,0,0,0.05);
         }
-        
+
         .header-title h2 { color: #1e293b; font-size: 1.8rem; font-weight: 700; }
         .header-title p { color: #64748b; font-size: 0.95rem; margin-top: 5px; }
-        
+
         .courses-list {
             display: flex;
             flex-direction: column;
             gap: 20px;
         }
-        
+
         .course-card {
             background: white;
             padding: 30px;
@@ -131,18 +131,18 @@ $conn->close();
             transform: translateX(5px);
             box-shadow: 0 8px 25px rgba(0,0,0,0.1);
         }
-        @keyframes slideUp { 
-            from { opacity: 0; transform: translateY(20px); } 
-            to { opacity: 1; transform: translateY(0); } 
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
-        
+
         .course-header {
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
             margin-bottom: 20px;
         }
-        
+
         .course-info h3 {
             color: #1e293b;
             font-size: 1.3rem;
@@ -154,7 +154,7 @@ $conn->close();
             font-size: 0.95rem;
             line-height: 1.5;
         }
-        
+
         .course-status {
             padding: 8px 16px;
             border-radius: 20px;
@@ -162,9 +162,9 @@ $conn->close();
             font-weight: 600;
         }
         .status-active { background: #d1fae5; color: #065f46; }
-        .status-completed { background: #dbeafe; color: #1e40af; }
+        .status-completed { background: #fee2e2; color: #991b1b; }
         .status-suspended { background: #fee2e2; color: #991b1b; }
-        
+
         .course-progress {
             margin-bottom: 20px;
         }
@@ -185,16 +185,16 @@ $conn->close();
         }
         .progress-fill {
             height: 100%;
-            background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
             border-radius: 5px;
             transition: width 0.5s ease;
         }
-        
+
         .course-actions {
             display: flex;
             gap: 10px;
         }
-        
+
         .btn {
             display: inline-flex;
             align-items: center;
@@ -208,23 +208,23 @@ $conn->close();
             text-decoration: none;
             transition: all 0.3s;
         }
-        .btn-primary { 
-            background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%); 
-            color: white; 
+        .btn-primary {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            color: white;
         }
-        .btn-primary:hover { 
-            transform: translateY(-2px); 
-            box-shadow: 0 8px 20px rgba(59, 130, 246, 0.4); 
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(239,68,68, 0.4);
         }
-        .btn-success { 
-            background: linear-gradient(135deg, #10b981 0%, #34d399 100%); 
-            color: white; 
+        .btn-success {
+            background: linear-gradient(135deg, #10b981 0%, #34d399 100%);
+            color: white;
         }
-        .btn-success:hover { 
-            transform: translateY(-2px); 
-            box-shadow: 0 8px 20px rgba(16, 185, 129, 0.4); 
+        .btn-success:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(16, 185, 129, 0.4);
         }
-        
+
         .no-data {
             text-align: center;
             padding: 60px 20px;
@@ -235,7 +235,7 @@ $conn->close();
             margin-bottom: 20px;
             opacity: 0.5;
         }
-        
+
         @media (max-width: 768px) {
             .sidebar { width: 100%; position: relative; height: auto; }
             .main-content { margin-left: 0; }
@@ -250,7 +250,7 @@ $conn->close();
                 <h1>🎓 Abacus Academy</h1>
                 <p>Learning Portal</p>
             </div>
-            
+
             <ul class="nav-menu">
                 <li class="nav-item">
                     <a href="student_dashboard.php" class="nav-link">
@@ -356,7 +356,7 @@ $conn->close();
                 </li>
             </ul>
         </aside>
-        
+
         <main class="main-content">
             <div class="header">
                 <div class="header-title">
@@ -364,10 +364,10 @@ $conn->close();
                     <p>Continue where you left off</p>
                 </div>
             </div>
-            
+
             <div class="courses-list">
                 <?php if ($my_courses && $my_courses->num_rows > 0): ?>
-                    <?php while($course = $my_courses->fetch_assoc()): 
+                    <?php while($course = $my_courses->fetch_assoc()):
                         $progress_data = $course_progress[$course['course_id']] ?? null;
                         $progress_percentage = $progress_data ? round($progress_data['progress_percentage']) : 0;
                     ?>
@@ -381,7 +381,7 @@ $conn->close();
                                     <?php echo ucfirst($course['enrollment_status']); ?>
                                 </span>
                             </div>
-                            
+
                             <div class="course-progress">
                                 <div class="course-progress-label">
                                     <span>Progress</span>
@@ -394,7 +394,7 @@ $conn->close();
                                     <?php echo $progress_data ? $progress_data['completed_lessons'] : 0; ?> of <?php echo $progress_data ? $progress_data['total_lessons'] : 0; ?> lessons completed
                                 </div>
                             </div>
-                            
+
                             <div class="course-actions">
                                 <a href="course_viewer.php?course_id=<?php echo $course['course_id']; ?>" class="btn btn-primary">
                                     📖 Continue Learning

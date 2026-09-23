@@ -41,9 +41,9 @@ $conn->close();
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f8fafc; min-height: 100vh; }
-        
+
         .dashboard { display: flex; min-height: 100vh; }
-        
+
         .sidebar {
             width: 260px;
             background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
@@ -55,15 +55,15 @@ $conn->close();
             box-shadow: 2px 0 10px rgba(0,0,0,0.05);
             z-index: 100;
         }
-        
+
         .logo {
             text-align: center;
             padding: 20px;
             border-bottom: 1px solid #e2e8f0;
             margin-bottom: 20px;
         }
-        .logo h1 { color: #3b82f6; font-size: 1.5rem; font-weight: 700; }
-        
+        .logo h1 { color: #ef4444; font-size: 1.5rem; font-weight: 700; }
+
         .nav-menu { list-style: none; padding: 0 10px; }
         .nav-item { margin-bottom: 5px; }
         .nav-link {
@@ -79,14 +79,14 @@ $conn->close();
             font-size: 0.95rem;
         }
         .nav-link:hover, .nav-link.active {
-            background: linear-gradient(135deg, #dbeafe 0%, #e0e7ff 100%);
-            color: #3b82f6;
+            background: linear-gradient(135deg, #fee2e2 0%, #fef2f2 100%);
+            color: #ef4444;
             transform: translateX(5px);
         }
         .nav-link .icon { font-size: 1.2rem; width: 24px; text-align: center; }
-        
+
         .main-content { flex: 1; margin-left: 260px; padding: 30px; }
-        
+
         .header {
             display: flex;
             justify-content: space-between;
@@ -97,17 +97,17 @@ $conn->close();
             border-radius: 16px;
             box-shadow: 0 2px 10px rgba(0,0,0,0.05);
         }
-        
+
         .header-title h2 { color: #1e293b; font-size: 1.8rem; font-weight: 700; }
         .header-title p { color: #64748b; font-size: 0.95rem; margin-top: 5px; }
-        
+
         .practice-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 20px;
             margin-bottom: 30px;
         }
-        
+
         .practice-card {
             background: white;
             padding: 30px;
@@ -123,30 +123,30 @@ $conn->close();
             transform: translateY(-8px);
             box-shadow: 0 15px 35px rgba(0,0,0,0.15);
         }
-        @keyframes slideUp { 
-            from { opacity: 0; transform: translateY(20px); } 
-            to { opacity: 1; transform: translateY(0); } 
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
-        
+
         .practice-icon {
             font-size: 3rem;
             margin-bottom: 15px;
         }
-        
+
         .practice-title {
             font-size: 1.2rem;
             font-weight: 700;
             color: #1e293b;
             margin-bottom: 10px;
         }
-        
+
         .practice-description {
             color: #64748b;
             font-size: 0.9rem;
             line-height: 1.5;
             margin-bottom: 20px;
         }
-        
+
         .btn {
             display: inline-flex;
             align-items: center;
@@ -161,15 +161,15 @@ $conn->close();
             text-decoration: none;
             transition: all 0.3s;
         }
-        .btn-primary { 
-            background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%); 
-            color: white; 
+        .btn-primary {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            color: white;
         }
-        .btn-primary:hover { 
-            transform: translateY(-2px); 
-            box-shadow: 0 6px 15px rgba(59, 130, 246, 0.4); 
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(239,68,68, 0.4);
         }
-        
+
         .history-card {
             background: white;
             padding: 25px;
@@ -177,13 +177,13 @@ $conn->close();
             box-shadow: 0 2px 10px rgba(0,0,0,0.05);
             border: 1px solid #e2e8f0;
         }
-        
+
         .history-card h3 {
             color: #1e293b;
             font-size: 1.2rem;
             margin-bottom: 20px;
         }
-        
+
         .history-item {
             display: flex;
             justify-content: space-between;
@@ -191,11 +191,11 @@ $conn->close();
             padding: 15px 0;
             border-bottom: 1px solid #e2e8f0;
         }
-        
+
         .history-item:last-child {
             border-bottom: none;
         }
-        
+
         .history-info h4 {
             color: #1e293b;
             font-size: 1rem;
@@ -206,7 +206,7 @@ $conn->close();
             color: #64748b;
             font-size: 0.85rem;
         }
-        
+
         .xp-badge {
             display: inline-flex;
             align-items: center;
@@ -218,7 +218,7 @@ $conn->close();
             font-size: 0.85rem;
             font-weight: 600;
         }
-        
+
         @media (max-width: 768px) {
             .sidebar { width: 100%; position: relative; height: auto; }
             .main-content { margin-left: 0; }
@@ -233,7 +233,7 @@ $conn->close();
                 <h1>🎓 Abacus Academy</h1>
                 <p>Learning Portal</p>
             </div>
-            
+
             <ul class="nav-menu">
                 <li class="nav-item">
                     <a href="student_dashboard.php" class="nav-link">
@@ -339,7 +339,7 @@ $conn->close();
                 </li>
             </ul>
         </aside>
-        
+
         <main class="main-content">
             <div class="header">
                 <div class="header-title">
@@ -347,7 +347,7 @@ $conn->close();
                     <p>Sharpen your abacus skills with practice exercises</p>
                 </div>
             </div>
-            
+
             <div class="practice-grid">
                 <div class="practice-card" onclick="alert('Mental Math practice would start here')">
                     <div class="practice-icon">🧮</div>
@@ -355,28 +355,28 @@ $conn->close();
                     <div class="practice-description">Practice calculations in your head without the abacus</div>
                     <button class="btn btn-primary">Start Practice</button>
                 </div>
-                
+
                 <div class="practice-card" onclick="alert('Flash Cards practice would start here')">
                     <div class="practice-icon">🃏</div>
                     <div class="practice-title">Flash Cards</div>
                     <div class="practice-description">Quick recall practice with digital flash cards</div>
                     <button class="btn btn-primary">Start Practice</button>
                 </div>
-                
+
                 <div class="practice-card" onclick="alert('Abacus Exercises would start here')">
                     <div class="practice-icon">🎯</div>
                     <div class="practice-title">Abacus Exercises</div>
                     <div class="practice-description">Interactive abacus manipulation exercises</div>
                     <button class="btn btn-primary">Start Practice</button>
                 </div>
-                
+
                 <div class="practice-card" onclick="alert('Speed Challenge would start here')">
                     <div class="practice-icon">⚡</div>
                     <div class="practice-title">Speed Challenges</div>
                     <div class="practice-description">Race against time to solve problems quickly</div>
                     <button class="btn btn-primary">Start Challenge</button>
                 </div>
-                
+
                 <div class="practice-card" onclick="alert('Daily Practice would start here')">
                     <div class="practice-icon">📅</div>
                     <div class="practice-title">Daily Practice</div>
@@ -384,7 +384,7 @@ $conn->close();
                     <button class="btn btn-primary">Start Daily</button>
                 </div>
             </div>
-            
+
             <div class="history-card">
                 <h3>📊 Recent Practice History</h3>
                 <?php if ($practice_history && $practice_history->num_rows > 0): ?>

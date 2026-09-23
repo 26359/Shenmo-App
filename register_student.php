@@ -40,7 +40,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $check->bind_param("ss", $student_id, $username);
         $check->execute();
         $check->store_result();
-        
+
         if ($check->num_rows > 0) {
             $error = "Student ID or Username already exists.";
         } else {
@@ -57,7 +57,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 if ($stmt->execute()) {
                     // Force email_verified=1 in case INSERT ignored it
                     $conn->query("UPDATE students SET email_verified=1 WHERE username='" . $conn->real_escape_string($username) . "'");
-                    $message = "Registration successful! You can now <a href='login.php' style='color:#667eea;font-weight:bold'>login here</a>.";
+                    $message = "Registration successful! You can now <a href='login.php' style='color:#ef4444;font-weight:bold'>login here</a>.";
                     $_POST = [];
                 } else {
                     $error = "Registration failed: " . $stmt->error;
@@ -78,16 +78,16 @@ $conn->close();
     <title>Student Registration - Abacus Academy</title>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { 
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
-            min-height: 100vh; 
-            display: flex; 
-            justify-content: center; 
-            align-items: center; 
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             padding: 20px;
         }
-        
+
         .register-card {
             background: white;
             padding: 40px;
@@ -97,49 +97,49 @@ $conn->close();
             max-width: 600px;
             animation: slideUp 0.5s;
         }
-        @keyframes slideUp { 
-            from { opacity: 0; transform: translateY(40px); } 
-            to { opacity: 1; transform: translateY(0); } 
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
         }
-        
+
         .logo {
             text-align: center;
             font-size: 3rem;
             margin-bottom: 10px;
         }
-        
-        h1 { 
-            text-align: center; 
-            color: #2d3748; 
-            margin-bottom: 8px; 
-            font-size: 1.8rem; 
+
+        h1 {
+            text-align: center;
+            color: #2d3748;
+            margin-bottom: 8px;
+            font-size: 1.8rem;
         }
-        
-        .subtitle { 
-            text-align: center; 
-            color: #718096; 
-            margin-bottom: 30px; 
-            font-size: 0.95rem; 
+
+        .subtitle {
+            text-align: center;
+            color: #718096;
+            margin-bottom: 30px;
+            font-size: 0.95rem;
         }
-        
+
         .form-row {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 15px;
         }
-        
-        .form-group { 
-            margin-bottom: 20px; 
+
+        .form-group {
+            margin-bottom: 20px;
         }
-        
-        .form-group label { 
-            display: block; 
-            margin-bottom: 8px; 
-            font-weight: 600; 
-            color: #4a5568; 
-            font-size: 0.9rem; 
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #4a5568;
+            font-size: 0.9rem;
         }
-        
+
         .form-group input, .form-group select, .form-group textarea {
             width: 100%;
             padding: 12px 16px;
@@ -148,22 +148,22 @@ $conn->close();
             font-size: 14px;
             transition: all 0.3s;
         }
-        
-        .form-group input:focus, .form-group select:focus, .form-group textarea:focus { 
-            outline: none; 
-            border-color: #667eea; 
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1); 
+
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+            outline: none;
+            border-color: #ef4444;
+            box-shadow: 0 0 0 3px rgba(239,68,68, 0.1);
         }
-        
+
         .form-group textarea {
             resize: vertical;
             min-height: 80px;
         }
-        
+
         .register-btn {
             width: 100%;
             padding: 14px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
             color: white;
             border: none;
             border-radius: 12px;
@@ -173,12 +173,12 @@ $conn->close();
             margin-top: 10px;
             transition: all 0.3s;
         }
-        
-        .register-btn:hover { 
-            transform: translateY(-2px); 
-            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4); 
+
+        .register-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(239,68,68, 0.4);
         }
-        
+
         .message {
             padding: 14px 18px;
             border-radius: 12px;
@@ -187,36 +187,36 @@ $conn->close();
             font-weight: 600;
             font-size: 0.95rem;
         }
-        
-        .message.success { 
-            background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%); 
-            color: #155724; 
-            border: 1px solid #c3e6cb; 
+
+        .message.success {
+            background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+            color: #155724;
+            border: 1px solid #c3e6cb;
         }
-        
-        .message.error { 
-            background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%); 
-            color: #721c24; 
-            border: 1px solid #f5c6cb; 
+
+        .message.error {
+            background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%);
+            color: #721c24;
+            border: 1px solid #f5c6cb;
         }
-        
+
         .login-link {
             text-align: center;
             margin-top: 20px;
             color: #718096;
             font-size: 0.95rem;
         }
-        
+
         .login-link a {
-            color: #667eea;
+            color: #ef4444;
             text-decoration: none;
             font-weight: 600;
         }
-        
+
         .login-link a:hover {
             text-decoration: underline;
         }
-        
+
         @media (max-width: 768px) {
             .form-row {
                 grid-template-columns: 1fr;
@@ -233,7 +233,7 @@ $conn->close();
         <?php if ($message): ?>
             <div class="message success"><?php echo $message; ?></div>
         <?php endif; ?>
-        
+
         <?php if ($error): ?>
             <div class="message error"><?php echo $error; ?></div>
         <?php endif; ?>
@@ -249,7 +249,7 @@ $conn->close();
                     <input type="text" id="full_name" name="full_name" required value="<?php echo htmlspecialchars($_POST['full_name'] ?? ''); ?>">
                 </div>
             </div>
-            
+
             <div class="form-row">
                 <div class="form-group">
                     <label for="grade_level">Abacus Level *</label>
@@ -265,7 +265,7 @@ $conn->close();
                     <input type="email" id="email" name="email" required value="<?php echo htmlspecialchars($_POST['email'] ?? ''); ?>">
                 </div>
             </div>
-            
+
             <div class="form-row">
                 <div class="form-group">
                     <label for="phone">Phone Number *</label>
@@ -276,12 +276,12 @@ $conn->close();
                     <input type="date" id="dob" name="dob" value="<?php echo htmlspecialchars($_POST['dob'] ?? ''); ?>">
                 </div>
             </div>
-            
+
             <div class="form-group">
                 <label for="address">Address</label>
                 <textarea id="address" name="address"><?php echo htmlspecialchars($_POST['address'] ?? ''); ?></textarea>
             </div>
-            
+
             <div class="form-row">
                 <div class="form-group">
                     <label for="username">Username *</label>
@@ -292,12 +292,12 @@ $conn->close();
                     <input type="password" id="password" name="password" required minlength="6">
                 </div>
             </div>
-            
+
             <div class="form-group">
                 <label for="confirm_password">Confirm Password *</label>
                 <input type="password" id="confirm_password" name="confirm_password" required minlength="6">
             </div>
-            
+
             <button type="submit" class="register-btn">Create Account</button>
         </form>
 

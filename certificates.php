@@ -38,12 +38,12 @@ $conn->close();
         .dashboard{display:flex;min-height:100vh}
         .sidebar{width:260px;background:linear-gradient(180deg,#fff 0%,#f8fafc 100%);border-right:1px solid #e2e8f0;padding:20px 0;position:fixed;height:100vh;overflow-y:auto;box-shadow:2px 0 10px rgba(0,0,0,0.05);z-index:100;transition:transform 0.3s}
         .logo{text-align:center;padding:20px;border-bottom:1px solid #e2e8f0;margin-bottom:20px}
-        .logo h1{color:#3b82f6;font-size:1.4rem;font-weight:700}
+        .logo h1{color:#ef4444;font-size:1.4rem;font-weight:700}
         .logo p{color:#94a3b8;font-size:0.8rem;margin-top:4px}
         .nav-menu{list-style:none;padding:0 10px}
         .nav-item{margin-bottom:4px}
         .nav-link{display:flex;align-items:center;gap:12px;padding:11px 14px;color:#475569;text-decoration:none;border-radius:12px;transition:all 0.2s;font-weight:500;font-size:0.92rem}
-        .nav-link:hover,.nav-link.active{background:linear-gradient(135deg,#dbeafe,#e0e7ff);color:#3b82f6}
+        .nav-link:hover,.nav-link.active{background:linear-gradient(135deg,#fee2e2,#fef2f2);color:#ef4444}
         .nav-link .icon{font-size:1.1rem;width:22px;text-align:center}
         .main-content{flex:1;margin-left:260px;padding:25px}
         .topbar{background:#fff;padding:14px 20px;border-radius:14px;box-shadow:0 2px 8px rgba(0,0,0,0.06);margin-bottom:22px;display:flex;align-items:center;gap:14px}
@@ -62,8 +62,8 @@ $conn->close();
         .cert-date{color:#94a3b8;font-size:0.85rem;margin-bottom:16px}
         .cert-actions{display:flex;gap:10px;flex-wrap:wrap}
         .btn{display:inline-flex;align-items:center;gap:7px;padding:10px 18px;border:none;border-radius:10px;cursor:pointer;font-size:0.88rem;font-weight:600;text-decoration:none;transition:all 0.2s}
-        .btn-download{background:linear-gradient(135deg,#3b82f6,#8b5cf6);color:#fff}
-        .btn-download:hover{transform:translateY(-2px);box-shadow:0 5px 14px rgba(59,130,246,0.35)}
+        .btn-download{background:linear-gradient(135deg,#ef4444,#dc2626);color:#fff}
+        .btn-download:hover{transform:translateY(-2px);box-shadow:0 5px 14px rgba(239,68,68,0.35)}
         .btn-view{background:#fff;border:2px solid #e2e8f0;color:#475569}
         .btn-view:hover{border-color:#f59e0b;color:#f59e0b}
         .btn-disabled{background:#f1f5f9;color:#94a3b8;cursor:not-allowed}

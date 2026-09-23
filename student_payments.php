@@ -27,15 +27,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['make_payment'])) {
     $payment_method = $_POST['payment_method'];
     $reference_number = $_POST['reference_number'];
     $notes = $_POST['notes'];
-    
+
     if ($amount_paid <= 0) {
         $message = "Amount must be greater than 0.";
     } else {
         $course = $conn->query("SELECT * FROM courses WHERE id = $course_id")->fetch_assoc();
         $enrollment = $conn->query("SELECT * FROM enrollments WHERE student_id = '" . $_SESSION['student_id'] . "' AND course_id = $course_id")->fetch_assoc();
-        
+
         if (!$enrollment) {
-            $conn->query("INSERT INTO enrollments (student_id, course_id, total_fee, amount_paid, payment_status, enrollment_status) 
+            $conn->query("INSERT INTO enrollments (student_id, course_id, total_fee, amount_paid, payment_status, enrollment_status)
                          VALUES ('" . $_SESSION['student_id'] . "', $course_id, " . $course['fee_amount'] . ", $amount_paid, 'partial', 'active')");
             $enrollment_id = $conn->insert_id;
         } else {
@@ -44,20 +44,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['make_payment'])) {
             $conn->query("UPDATE enrollments SET amount_paid = $new_amount, payment_status = '$payment_status' WHERE id = " . $enrollment['id']);
             $enrollment_id = $enrollment['id'];
         }
-        
+
         $ref = 'RCP-' . date('Ymd') . '-' . str_pad(rand(1, 99999), 5, '0', STR_PAD_LEFT);
-        $conn->query("INSERT INTO payments (student_id, course_id, amount_paid, payment_method, reference_number, status, notes) 
+        $conn->query("INSERT INTO payments (student_id, course_id, amount_paid, payment_method, reference_number, status, notes)
                      VALUES ('" . $_SESSION['student_id'] . "', $course_id, $amount_paid, '$payment_method', '$ref', 'pending', '$notes')");
-        
+
         $message = "Payment submitted successfully! Reference: $ref";
     }
 }
 
 $courses_result = $conn->query("SELECT * FROM courses WHERE is_active = 1 ORDER BY level_number ASC");
 $enrollments_result = $conn->query("
-    SELECT e.*, c.course_name, c.fee_amount, c.level_number 
-    FROM enrollments e 
-    JOIN courses c ON e.course_id = c.id 
+    SELECT e.*, c.course_name, c.fee_amount, c.level_number
+    FROM enrollments e
+    JOIN courses c ON e.course_id = c.id
     WHERE e.student_id = '" . $_SESSION['student_id'] . "'
     ORDER BY e.enrolled_at DESC
 ");
@@ -76,12 +76,12 @@ $conn->close();
         .dashboard { display: flex; min-height: 100vh; }
         .sidebar{width:260px;background:linear-gradient(180deg,#fff 0%,#f8fafc 100%);border-right:1px solid #e2e8f0;padding:20px 0;position:fixed;height:100vh;overflow-y:auto;box-shadow:2px 0 10px rgba(0,0,0,0.05);z-index:100;transition:transform 0.3s}
         .logo{text-align:center;padding:20px;border-bottom:1px solid #e2e8f0;margin-bottom:20px}
-        .logo h1{color:#3b82f6;font-size:1.4rem;font-weight:700}
+        .logo h1{color:#ef4444;font-size:1.4rem;font-weight:700}
         .logo p{color:#94a3b8;font-size:0.8rem;margin-top:4px}
         .nav-menu{list-style:none;padding:0 10px}
         .nav-item{margin-bottom:4px}
         .nav-link{display:flex;align-items:center;gap:12px;padding:11px 14px;color:#475569;text-decoration:none;border-radius:12px;transition:all 0.2s;font-weight:500;font-size:0.92rem}
-        .nav-link:hover,.nav-link.active{background:linear-gradient(135deg,#dbeafe,#e0e7ff);color:#3b82f6}
+        .nav-link:hover,.nav-link.active{background:linear-gradient(135deg,#fee2e2,#fef2f2);color:#ef4444}
         .nav-link .icon{font-size:1.1rem;width:22px;text-align:center}
         .main-content{flex:1;margin-left:260px;padding:25px}
         .topbar{background:#fff;padding:14px 20px;border-radius:14px;box-shadow:0 2px 8px rgba(0,0,0,0.06);margin-bottom:22px;display:flex;align-items:center;gap:14px}
@@ -89,10 +89,10 @@ $conn->close();
         .topbar h2{color:#1e293b;font-size:1.3rem;font-weight:700}
         .sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:150}
         .sidebar-overlay.active{display:block}
-        
+
         .card { background: white; padding: 25px; border-radius: 16px; box-shadow: 0 2px 10px rgba(0,0,0,0.06); margin-bottom: 24px; border: 1px solid #e2e8f0; }
         .card h2 { color: #1a202c; margin-bottom: 20px; font-size: 1.3rem; display: flex; align-items: center; gap: 10px; }
-        
+
         .form-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-bottom: 20px; }
         .form-group { display: flex; flex-direction: column; }
         .form-group label { font-weight: 600; margin-bottom: 8px; color: #4a5568; font-size: 0.9rem; }
@@ -105,11 +105,11 @@ $conn->close();
         }
         .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
             outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            border-color: #ef4444;
+            box-shadow: 0 0 0 3px rgba(239,68,68, 0.1);
         }
         .form-group textarea { resize: vertical; min-height: 80px; }
-        
+
         .btn {
             display: inline-flex; align-items: center; gap: 8px;
             padding: 12px 28px;
@@ -121,15 +121,15 @@ $conn->close();
             text-decoration: none;
             transition: all 0.3s;
         }
-        .btn-primary { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; }
-        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4); }
+        .btn-primary { background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%); color: white; }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(239,68,68, 0.4); }
         .btn-success { background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); color: white; }
         .btn-success:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(56, 239, 125, 0.4); }
         .btn-danger { background: linear-gradient(135deg, #eb3349 0%, #f45c43 100%); color: white; }
         .btn-danger:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(235, 51, 73, 0.4); }
         .btn-secondary { background: linear-gradient(135deg, #a8a8a8 0%, #7c7c7c 100%); color: white; }
         .btn-secondary:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(124, 124, 124, 0.4); }
-        
+
         .message {
             padding: 16px 20px;
             border-radius: 12px;
@@ -140,12 +140,12 @@ $conn->close();
         }
         .message.success { background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%); color: #155724; border: 1px solid #c3e6cb; }
         .message.error { background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%); color: #721c24; border: 1px solid #f5c6cb; }
-        
+
         @keyframes slideDown {
             from { opacity: 0; transform: translateY(-10px); }
             to { opacity: 1; transform: translateY(0); }
         }
-        
+
         .enrollment-card {
             background: white;
             padding: 25px;
@@ -159,7 +159,7 @@ $conn->close();
         .enrollment-card.unpaid { border-left-color: #e74c3c; }
         .enrollment-card.partial { border-left-color: #f39c12; }
         .enrollment-card.paid { border-left-color: #27ae60; }
-        
+
         .enrollment-header {
             display: flex;
             justify-content: space-between;
@@ -177,7 +177,7 @@ $conn->close();
         .status-unpaid { background: #fee; color: #c33; }
         .status-partial { background: #ffeaa7; color: #d68910; }
         .status-paid { background: #d4edda; color: #155724; }
-        
+
         .enrollment-details {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -186,7 +186,7 @@ $conn->close();
         }
         .detail-item { color: #4a5568; }
         .detail-item strong { color: #2d3748; }
-        
+
         .balance-display {
             font-size: 1.5rem;
             font-weight: 700;
@@ -194,7 +194,7 @@ $conn->close();
             margin: 10px 0;
         }
         .balance-display.highlight { color: #e74c3c; }
-        
+
         .no-data { text-align: center; padding: 60px 20px; color: #a0aec0; font-size: 1.1rem; }
         @media(max-width:768px){
             .sidebar{transform:translateX(-100%)}
@@ -312,7 +312,7 @@ $conn->close();
                                 <strong>Amount Paid:</strong> RWF <?php echo number_format($enrollment['amount_paid'], 2); ?>
                             </div>
                             <div class="detail-item">
-                                <strong>Balance:</strong> 
+                                <strong>Balance:</strong>
                                 <span class="balance-display <?php echo ($enrollment['total_fee'] - $enrollment['amount_paid']) > 0 ? 'highlight' : ''; ?>">
                                     RWF <?php echo number_format($enrollment['total_fee'] - $enrollment['amount_paid'], 2); ?>
                                 </span>

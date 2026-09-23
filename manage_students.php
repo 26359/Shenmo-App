@@ -51,7 +51,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['add_student'])) {
     $username = $_POST['username'];
     $password = $_POST['password'];
 
-    $sql = "INSERT INTO students (student_id, full_name, grade_level, email, phone, address, dob, username, password) 
+    $sql = "INSERT INTO students (student_id, full_name, grade_level, email, phone, address, dob, username, password)
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("sssssssss", $student_id, $full_name, $grade_level, $email, $phone, $address, $dob, $username, $password);
@@ -77,9 +77,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['update_student'])) {
     $username = $_POST['username'];
     $password = $_POST['password'];
 
-    $sql = "UPDATE students SET 
-            full_name = ?, grade_level = ?, email = ?, phone = ?, 
-            address = ?, dob = ?, username = ?, password = ? 
+    $sql = "UPDATE students SET
+            full_name = ?, grade_level = ?, email = ?, phone = ?,
+            address = ?, dob = ?, username = ?, password = ?
             WHERE student_id = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("sssssssss", $full_name, $grade_level, $email, $phone, $address, $dob, $username, $password, $student_id);
@@ -139,7 +139,7 @@ if (isset($_GET['edit'])) {
         .nav-menu{list-style:none;padding:0 10px}
         .nav-item{margin-bottom:3px}
         .nav-link{display:flex;align-items:center;gap:12px;padding:11px 14px;color:#94a3b8;text-decoration:none;border-radius:10px;transition:all 0.2s;font-size:0.9rem;font-weight:500}
-        .nav-link:hover,.nav-link.active{background:rgba(59,130,246,0.2);color:#60a5fa}
+        .nav-link:hover,.nav-link.active{background:rgba(239,68,68,0.2);color:#f87171}
         .nav-link .icon{font-size:1.1rem;width:22px;text-align:center}
         .main-wrap{flex:1;margin-left:260px;display:flex;flex-direction:column}
         .topbar{background:#fff;padding:15px 25px;display:flex;justify-content:space-between;align-items:center;box-shadow:0 1px 4px rgba(0,0,0,0.08);position:sticky;top:0;z-index:100}
@@ -171,8 +171,8 @@ if (isset($_GET['edit'])) {
         }
         .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
             outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            border-color: #ef4444;
+            box-shadow: 0 0 0 3px rgba(239,68,68, 0.1);
         }
         .form-group textarea { resize: vertical; min-height: 80px; }
         .btn {
@@ -186,8 +186,8 @@ if (isset($_GET['edit'])) {
             text-decoration: none;
             transition: all 0.3s;
         }
-        .btn-primary { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; }
-        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4); }
+        .btn-primary { background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%); color: white; }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(239,68,68, 0.4); }
         .btn-success { background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); color: white; }
         .btn-success:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(56, 239, 125, 0.4); }
         .btn-warning { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white; }
@@ -216,7 +216,7 @@ if (isset($_GET['edit'])) {
         .table-container { overflow-x: auto; border-radius: 12px; }
         table { width: 100%; border-collapse: collapse; }
         th, td { border: 1px solid #e2e8f0; padding: 14px 12px; text-align: left; }
-        th { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; font-weight: 600; font-size: 0.9rem; }
+        th { background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%); color: white; font-weight: 600; font-size: 0.9rem; }
         tr:nth-child(even) { background: #f7fafc; }
         tr:hover { background: #edf2f7; transition: background 0.2s; }
         .no-data { text-align: center; padding: 40px; color: #a0aec0; font-size: 1rem; }

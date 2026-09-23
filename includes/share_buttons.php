@@ -83,9 +83,9 @@ function copyShareLink() {
     box-shadow: 0 6px 16px rgba(0,0,0,0.15);
 }
 .share-btn.whatsapp { background: #25D366; }
-.share-btn.facebook { background: #1877F2; }
+.share-btn.facebook { background: #ef4444; }
 .share-btn.twitter { background: #000000; }
-.share-btn.linkedin { background: #0A66C2; }
+.share-btn.linkedin { background: #dc2626; }
 .share-btn.copy { background: #64748b; }
 @media(max-width:480px){
     .share-btn span.btn-label { display: none; }

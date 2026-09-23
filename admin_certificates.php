@@ -84,7 +84,7 @@ $conn->close();
         .nav-menu{list-style:none;padding:0 10px}
         .nav-item{margin-bottom:3px}
         .nav-link{display:flex;align-items:center;gap:12px;padding:11px 14px;color:#94a3b8;text-decoration:none;border-radius:10px;transition:all 0.2s;font-size:0.9rem;font-weight:500}
-        .nav-link:hover,.nav-link.active{background:rgba(59,130,246,0.2);color:#60a5fa}
+        .nav-link:hover,.nav-link.active{background:rgba(239,68,68,0.2);color:#f87171}
         .nav-link .icon{font-size:1.1rem;width:22px;text-align:center}
         .nav-badge{margin-left:auto;background:#ef4444;color:#fff;font-size:0.7rem;padding:2px 7px;border-radius:10px;font-weight:700}
         .main{flex:1;margin-left:260px;display:flex;flex-direction:column}

@@ -88,12 +88,12 @@ $conn->close();
         .dashboard{display:flex;min-height:100vh}
         .sidebar{width:260px;background:linear-gradient(180deg,#fff 0%,#f8fafc 100%);border-right:1px solid #e2e8f0;padding:20px 0;position:fixed;height:100vh;overflow-y:auto;box-shadow:2px 0 10px rgba(0,0,0,0.05);z-index:100;transition:transform 0.3s}
         .logo{text-align:center;padding:20px;border-bottom:1px solid #e2e8f0;margin-bottom:20px}
-        .logo h1{color:#3b82f6;font-size:1.4rem;font-weight:700}
+        .logo h1{color:#ef4444;font-size:1.4rem;font-weight:700}
         .logo p{color:#94a3b8;font-size:0.8rem;margin-top:4px}
         .nav-menu{list-style:none;padding:0 10px}
         .nav-item{margin-bottom:4px}
         .nav-link{display:flex;align-items:center;gap:12px;padding:11px 14px;color:#475569;text-decoration:none;border-radius:12px;transition:all 0.2s;font-weight:500;font-size:0.92rem}
-        .nav-link:hover,.nav-link.active{background:linear-gradient(135deg,#dbeafe,#e0e7ff);color:#3b82f6}
+        .nav-link:hover,.nav-link.active{background:linear-gradient(135deg,#fee2e2,#fef2f2);color:#ef4444}
         .nav-link .icon{font-size:1.1rem;width:22px;text-align:center}
         .main-content{flex:1;margin-left:260px;padding:25px}
         .topbar{background:#fff;padding:14px 20px;border-radius:14px;box-shadow:0 2px 8px rgba(0,0,0,0.06);margin-bottom:22px;display:flex;align-items:center;gap:14px}
@@ -111,27 +111,27 @@ $conn->close();
         .hw-meta-item{display:flex;align-items:center;gap:6px;color:#64748b;font-size:0.85rem}
         .badge{display:inline-block;padding:5px 12px;border-radius:20px;font-size:0.78rem;font-weight:600}
         .badge-pending{background:#fef3c7;color:#92400e}
-        .badge-submitted{background:#dbeafe;color:#1e40af}
+        .badge-submitted{background:#fee2e2;color:#991b1b}
         .badge-graded{background:#d1fae5;color:#065f46}
         .badge-late{background:#fee2e2;color:#991b1b}
         .hw-actions{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:12px}
         .btn{display:inline-flex;align-items:center;gap:7px;padding:9px 18px;border:none;border-radius:10px;cursor:pointer;font-size:0.88rem;font-weight:600;text-decoration:none;transition:all 0.2s}
-        .btn-primary{background:linear-gradient(135deg,#3b82f6,#8b5cf6);color:#fff}
-        .btn-primary:hover{transform:translateY(-2px);box-shadow:0 5px 14px rgba(59,130,246,0.35)}
+        .btn-primary{background:linear-gradient(135deg,#ef4444,#dc2626);color:#fff}
+        .btn-primary:hover{transform:translateY(-2px);box-shadow:0 5px 14px rgba(239,68,68,0.35)}
         .btn-success{background:linear-gradient(135deg,#10b981,#34d399);color:#fff}
         .btn-success:hover{transform:translateY(-2px);box-shadow:0 5px 14px rgba(16,185,129,0.35)}
         .btn-outline{background:#fff;border:2px solid #e2e8f0;color:#475569}
-        .btn-outline:hover{border-color:#3b82f6;color:#3b82f6}
+        .btn-outline:hover{border-color:#ef4444;color:#ef4444}
         /* Upload inline form */
         .upload-form{background:#f8fafc;border:2px dashed #cbd5e1;border-radius:12px;padding:18px;margin-top:12px}
         .upload-form label{font-size:0.85rem;font-weight:600;color:#475569;display:block;margin-bottom:8px}
         .file-input-wrap{position:relative;display:inline-block}
         .file-input-wrap input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
         .file-input-btn{display:inline-flex;align-items:center;gap:7px;padding:9px 18px;background:#fff;border:2px solid #e2e8f0;border-radius:10px;font-size:0.88rem;font-weight:600;color:#475569;cursor:pointer;transition:all 0.2s}
-        .file-input-btn:hover{border-color:#3b82f6;color:#3b82f6}
-        .file-chosen{color:#3b82f6;font-size:0.85rem;margin-left:10px;font-weight:600}
-        .feedback-box{background:#f0f9ff;padding:14px;border-radius:10px;margin-top:12px;border-left:4px solid #3b82f6}
-        .feedback-box strong{color:#1e40af;font-size:0.85rem}
+        .file-input-btn:hover{border-color:#ef4444;color:#ef4444}
+        .file-chosen{color:#ef4444;font-size:0.85rem;margin-left:10px;font-weight:600}
+        .feedback-box{background:#fef2f2;padding:14px;border-radius:10px;margin-top:12px;border-left:4px solid #ef4444}
+        .feedback-box strong{color:#991b1b;font-size:0.85rem}
         .feedback-box p{color:#475569;margin-top:5px;font-size:0.9rem}
         .no-data{text-align:center;padding:60px 20px;color:#64748b}
         .no-data-icon{font-size:4rem;margin-bottom:16px;opacity:0.4}

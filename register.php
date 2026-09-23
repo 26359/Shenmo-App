@@ -5,7 +5,7 @@ $error = '';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $role = $_POST['role'] ?? '';
-    
+
     if (empty($role)) {
         $error = 'Please select a role.';
     } else {
@@ -26,16 +26,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <title>Register - Abacus Academy</title>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { 
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
-            min-height: 100vh; 
-            display: flex; 
-            justify-content: center; 
-            align-items: center; 
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             padding: 20px;
         }
-        
+
         .register-card {
             background: white;
             padding: 45px 40px;
@@ -45,43 +45,43 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             max-width: 500px;
             animation: slideUp 0.5s;
         }
-        @keyframes slideUp { 
-            from { opacity: 0; transform: translateY(40px); } 
-            to { opacity: 1; transform: translateY(0); } 
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
         }
-        
+
         .logo {
             text-align: center;
             font-size: 3.5rem;
             margin-bottom: 10px;
         }
-        
-        h1 { 
-            text-align: center; 
-            color: #2d3748; 
-            margin-bottom: 8px; 
-            font-size: 1.8rem; 
+
+        h1 {
+            text-align: center;
+            color: #2d3748;
+            margin-bottom: 8px;
+            font-size: 1.8rem;
         }
-        
-        .subtitle { 
-            text-align: center; 
-            color: #718096; 
-            margin-bottom: 30px; 
-            font-size: 0.95rem; 
+
+        .subtitle {
+            text-align: center;
+            color: #718096;
+            margin-bottom: 30px;
+            font-size: 0.95rem;
         }
-        
-        .form-group { 
-            margin-bottom: 20px; 
+
+        .form-group {
+            margin-bottom: 20px;
         }
-        
-        .form-group label { 
-            display: block; 
-            margin-bottom: 8px; 
-            font-weight: 600; 
-            color: #4a5568; 
-            font-size: 0.9rem; 
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #4a5568;
+            font-size: 0.9rem;
         }
-        
+
         .form-group input, .form-group select {
             width: 100%;
             padding: 14px 16px;
@@ -90,20 +90,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             font-size: 15px;
             transition: all 0.3s;
         }
-        
-        .form-group input:focus, .form-group select:focus { 
-            outline: none; 
-            border-color: #667eea; 
-            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.15); 
+
+        .form-group input:focus, .form-group select:focus {
+            outline: none;
+            border-color: #ef4444;
+            box-shadow: 0 0 0 4px rgba(239,68,68, 0.15);
         }
-        
+
         .role-cards {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 15px;
             margin-bottom: 25px;
         }
-        
+
         .role-card {
             padding: 25px;
             border: 2px solid #e2e8f0;
@@ -113,43 +113,43 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             transition: all 0.3s;
             background: white;
         }
-        
+
         .role-card:hover {
-            border-color: #667eea;
+            border-color: #ef4444;
             transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.2);
+            box-shadow: 0 8px 20px rgba(239,68,68, 0.2);
         }
-        
+
         .role-card.selected {
-            border-color: #667eea;
-            background: linear-gradient(135deg, #dbeafe 0%, #e0e7ff 100%);
+            border-color: #ef4444;
+            background: linear-gradient(135deg, #fee2e2 0%, #fef2f2 100%);
         }
-        
+
         .role-card input[type="radio"] {
             display: none;
         }
-        
+
         .role-icon {
             font-size: 3rem;
             margin-bottom: 10px;
         }
-        
+
         .role-title {
             font-size: 1.1rem;
             font-weight: 700;
             color: #2d3748;
             margin-bottom: 5px;
         }
-        
+
         .role-desc {
             font-size: 0.85rem;
             color: #718096;
         }
-        
+
         .register-btn {
             width: 100%;
             padding: 14px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
             color: white;
             border: none;
             border-radius: 12px;
@@ -159,12 +159,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             margin-top: 10px;
             transition: all 0.3s;
         }
-        
-        .register-btn:hover { 
-            transform: translateY(-2px); 
-            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4); 
+
+        .register-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(239,68,68, 0.4);
         }
-        
+
         .message {
             padding: 14px 18px;
             border-radius: 12px;
@@ -173,30 +173,30 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             font-weight: 600;
             font-size: 0.95rem;
         }
-        
-        .message.error { 
-            background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%); 
-            color: #721c24; 
-            border: 1px solid #f5c6cb; 
+
+        .message.error {
+            background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%);
+            color: #721c24;
+            border: 1px solid #f5c6cb;
         }
-        
+
         .login-link {
             text-align: center;
             margin-top: 20px;
             color: #718096;
             font-size: 0.95rem;
         }
-        
+
         .login-link a {
-            color: #667eea;
+            color: #ef4444;
             text-decoration: none;
             font-weight: 600;
         }
-        
+
         .login-link a:hover {
             text-decoration: underline;
         }
-        
+
         .hidden {
             display: none;
         }

@@ -20,16 +20,16 @@ class Mailer {
         $subject = 'Verify Your Email - Abacus Academy';
         $body    = "
         <div style='font-family:Arial,sans-serif;max-width:600px;margin:0 auto'>
-            <div style='background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;padding:30px;text-align:center;border-radius:10px 10px 0 0'>
+            <div style='background:linear-gradient(135deg,#ef4444,#dc2626);color:#fff;padding:30px;text-align:center;border-radius:10px 10px 0 0'>
                 <h1>🎓 Abacus Academy</h1><h2>Email Verification</h2>
             </div>
             <div style='background:#f9f9f9;padding:30px;border-radius:0 0 10px 10px'>
                 <p>Dear $name,</p>
                 <p>Thank you for registering! Please verify your email by clicking the button below:</p>
                 <div style='text-align:center;margin:25px 0'>
-                    <a href='$link' style='padding:15px 30px;background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;text-decoration:none;border-radius:8px;font-weight:bold'>Verify Email Address</a>
+                    <a href='$link' style='padding:15px 30px;background:linear-gradient(135deg,#ef4444,#dc2626);color:#fff;text-decoration:none;border-radius:8px;font-weight:bold'>Verify Email Address</a>
                 </div>
-                <p>Or copy this link: <a href='$link' style='color:#667eea'>$link</a></p>
+                <p>Or copy this link: <a href='$link' style='color:#ef4444'>$link</a></p>
                 <p><strong>This link expires in 24 hours.</strong></p>
                 <p style='color:#777;font-size:0.9rem'>© 2026 Abacus Academy</p>
             </div>
@@ -41,14 +41,14 @@ class Mailer {
         $subject = 'Welcome to Abacus Academy!';
         $body    = "
         <div style='font-family:Arial,sans-serif;max-width:600px;margin:0 auto'>
-            <div style='background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;padding:30px;text-align:center;border-radius:10px 10px 0 0'>
+            <div style='background:linear-gradient(135deg,#ef4444,#dc2626);color:#fff;padding:30px;text-align:center;border-radius:10px 10px 0 0'>
                 <h1>🎓 Abacus Academy</h1><h2>Welcome!</h2>
             </div>
             <div style='background:#f9f9f9;padding:30px;border-radius:0 0 10px 10px'>
                 <p>Dear $name,</p>
                 <p>Your account has been verified. You can now log in and access all features.</p>
                 <div style='text-align:center;margin:25px 0'>
-                    <a href='{$this->app_url}/login.php' style='padding:15px 30px;background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;text-decoration:none;border-radius:8px;font-weight:bold'>Login to Your Account</a>
+                    <a href='{$this->app_url}/login.php' style='padding:15px 30px;background:linear-gradient(135deg,#ef4444,#dc2626);color:#fff;text-decoration:none;border-radius:8px;font-weight:bold'>Login to Your Account</a>
                 </div>
                 <p style='color:#777;font-size:0.9rem'>© 2026 Abacus Academy</p>
             </div>

@@ -44,7 +44,7 @@ $conn->close();
         .nav-menu{list-style:none;padding:0 10px}
         .nav-item{margin-bottom:3px}
         .nav-link{display:flex;align-items:center;gap:12px;padding:11px 14px;color:#94a3b8;text-decoration:none;border-radius:10px;transition:all 0.2s;font-size:0.9rem;font-weight:500}
-        .nav-link:hover,.nav-link.active{background:rgba(59,130,246,0.2);color:#60a5fa}
+        .nav-link:hover,.nav-link.active{background:rgba(239,68,68,0.2);color:#f87171}
         .nav-link .icon{font-size:1.1rem;width:22px;text-align:center}
         .nav-badge{margin-left:auto;background:#ef4444;color:#fff;font-size:0.7rem;padding:2px 7px;border-radius:10px;font-weight:700}
 
@@ -55,7 +55,7 @@ $conn->close();
         .hamburger{display:none;background:none;border:none;font-size:1.4rem;cursor:pointer;color:#475569}
         .topbar h2{color:#1e293b;font-size:1.2rem;font-weight:700}
         .topbar-right{display:flex;align-items:center;gap:12px}
-        .admin-badge{background:linear-gradient(135deg,#3b82f6,#8b5cf6);color:#fff;padding:6px 14px;border-radius:20px;font-size:0.85rem;font-weight:600}
+        .admin-badge{background:linear-gradient(135deg,#ef4444,#dc2626);color:#fff;padding:6px 14px;border-radius:20px;font-size:0.85rem;font-weight:600}
 
         /* CONTENT */
         .content{padding:25px;flex:1}
@@ -65,8 +65,8 @@ $conn->close();
         .stat-card{background:#fff;padding:22px;border-radius:14px;box-shadow:0 2px 8px rgba(0,0,0,0.06);border:1px solid #e2e8f0;display:flex;align-items:center;gap:16px;transition:transform 0.2s}
         .stat-card:hover{transform:translateY(-3px)}
         .stat-icon{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;flex-shrink:0}
-        .stat-icon.blue{background:#dbeafe} .stat-icon.green{background:#d1fae5}
-        .stat-icon.orange{background:#fed7aa} .stat-icon.purple{background:#e9d5ff}
+        .stat-icon.red{background:#fee2e2} .stat-icon.green{background:#d1fae5}
+        .stat-icon.orange{background:#fed7aa} .stat-icon.purple{background:#fee2e2}
         .stat-info h3{font-size:1.8rem;font-weight:700;color:#1e293b}
         .stat-info p{color:#64748b;font-size:0.85rem;margin-top:2px}
 
@@ -74,7 +74,7 @@ $conn->close();
         .section-title{color:#1e293b;font-size:1.1rem;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:8px}
         .actions-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-bottom:28px}
         .action-card{background:#fff;padding:24px;border-radius:14px;box-shadow:0 2px 8px rgba(0,0,0,0.06);border:1px solid #e2e8f0;text-decoration:none;color:#1e293b;transition:all 0.2s;display:flex;flex-direction:column;align-items:center;text-align:center;gap:12px}
-        .action-card:hover{transform:translateY(-4px);box-shadow:0 10px 25px rgba(0,0,0,0.12);border-color:#3b82f6}
+        .action-card:hover{transform:translateY(-4px);box-shadow:0 10px 25px rgba(0,0,0,0.12);border-color:#ef4444}
         .action-card .action-icon{font-size:2.5rem}
         .action-card h3{font-size:1rem;font-weight:700}
         .action-card p{color:#64748b;font-size:0.82rem;line-height:1.4}
@@ -147,7 +147,7 @@ $conn->close();
         <div class="content">
             <div class="stats-grid">
                 <div class="stat-card">
-                    <div class="stat-icon blue">🎓</div>
+                    <div class="stat-icon red">🎓</div>
                     <div class="stat-info"><h3><?php echo $total_students; ?></h3><p>Total Students</p></div>
                 </div>
                 <div class="stat-card">

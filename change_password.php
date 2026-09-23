@@ -67,7 +67,7 @@ $conn->close();
     <title>Change Password - Student Portal</title>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; display: flex; justify-content: center; align-items: center; padding: 20px; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%); min-height: 100vh; display: flex; justify-content: center; align-items: center; padding: 20px; }
         .container { width: 100%; max-width: 500px; }
         .card {
             background: white;
@@ -89,7 +89,7 @@ $conn->close();
             font-size: 15px;
             transition: all 0.3s;
         }
-        .form-group input:focus { outline: none; border-color: #667eea; box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.15); }
+        .form-group input:focus { outline: none; border-color: #ef4444; box-shadow: 0 0 0 4px rgba(239,68,68, 0.15); }
         .btn-group { display: flex; gap: 10px; margin-top: 25px; }
         .btn {
             flex: 1;
@@ -103,8 +103,8 @@ $conn->close();
             text-align: center;
             transition: all 0.3s;
         }
-        .btn-primary { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; }
-        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4); }
+        .btn-primary { background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%); color: white; }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(239,68,68, 0.4); }
         .btn-secondary { background: #e2e8f0; color: #4a5568; }
         .btn-secondary:hover { background: #cbd5e0; }
         .message {

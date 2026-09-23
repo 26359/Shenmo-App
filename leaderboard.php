@@ -22,7 +22,7 @@ try {
 $student_id = $_SESSION['student_id'];
 
 $leaderboard_result = $conn->query("
-    SELECT 
+    SELECT
         s.student_id,
         s.full_name,
         COUNT(DISTINCT sa.id) as total_achievements,
@@ -47,9 +47,9 @@ $conn->close();
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f8fafc; min-height: 100vh; }
-        
+
         .dashboard { display: flex; min-height: 100vh; }
-        
+
         .sidebar {
             width: 260px;
             background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
@@ -61,15 +61,15 @@ $conn->close();
             box-shadow: 2px 0 10px rgba(0,0,0,0.05);
             z-index: 100;
         }
-        
+
         .logo {
             text-align: center;
             padding: 20px;
             border-bottom: 1px solid #e2e8f0;
             margin-bottom: 20px;
         }
-        .logo h1 { color: #3b82f6; font-size: 1.5rem; font-weight: 700; }
-        
+        .logo h1 { color: #ef4444; font-size: 1.5rem; font-weight: 700; }
+
         .nav-menu { list-style: none; padding: 0 10px; }
         .nav-item { margin-bottom: 5px; }
         .nav-link {
@@ -85,14 +85,14 @@ $conn->close();
             font-size: 0.95rem;
         }
         .nav-link:hover, .nav-link.active {
-            background: linear-gradient(135deg, #dbeafe 0%, #e0e7ff 100%);
-            color: #3b82f6;
+            background: linear-gradient(135deg, #fee2e2 0%, #fef2f2 100%);
+            color: #ef4444;
             transform: translateX(5px);
         }
         .nav-link .icon { font-size: 1.2rem; width: 24px; text-align: center; }
-        
+
         .main-content { flex: 1; margin-left: 260px; padding: 30px; }
-        
+
         .header {
             display: flex;
             justify-content: space-between;
@@ -103,10 +103,10 @@ $conn->close();
             border-radius: 16px;
             box-shadow: 0 2px 10px rgba(0,0,0,0.05);
         }
-        
+
         .header-title h2 { color: #1e293b; font-size: 1.8rem; font-weight: 700; }
         .header-title p { color: #64748b; font-size: 0.95rem; margin-top: 5px; }
-        
+
         .leaderboard-table {
             background: white;
             border-radius: 16px;
@@ -114,31 +114,31 @@ $conn->close();
             border: 1px solid #e2e8f0;
             overflow: hidden;
         }
-        
+
         table {
             width: 100%;
             border-collapse: collapse;
         }
-        
+
         th, td {
             padding: 16px;
             text-align: left;
             border-bottom: 1px solid #e2e8f0;
         }
-        
+
         th {
-            background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
             color: white;
             font-weight: 600;
             text-transform: uppercase;
             font-size: 0.85rem;
             letter-spacing: 0.5px;
         }
-        
+
         tr:hover {
             background: #f8fafc;
         }
-        
+
         .rank {
             display: inline-flex;
             align-items: center;
@@ -153,18 +153,18 @@ $conn->close();
         .rank-2 { background: linear-gradient(135deg, #94a3b8 0%, #64748b 100%); color: white; }
         .rank-3 { background: linear-gradient(135deg, #b45309 0%, #92400e 100%); color: white; }
         .rank-other { background: #e2e8f0; color: #475569; }
-        
+
         .student-info {
             display: flex;
             align-items: center;
             gap: 12px;
         }
-        
+
         .student-avatar {
             width: 40px;
             height: 40px;
             border-radius: 10px;
-            background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -172,7 +172,7 @@ $conn->close();
             font-weight: 600;
             font-size: 0.9rem;
         }
-        
+
         .xp-badge {
             display: inline-flex;
             align-items: center;
@@ -184,7 +184,7 @@ $conn->close();
             font-size: 0.85rem;
             font-weight: 600;
         }
-        
+
         @media (max-width: 768px) {
             .sidebar { width: 100%; position: relative; height: auto; }
             .main-content { margin-left: 0; }
@@ -199,7 +199,7 @@ $conn->close();
                 <h1>🎓 Abacus Academy</h1>
                 <p>Learning Portal</p>
             </div>
-            
+
             <ul class="nav-menu">
                 <li class="nav-item">
                     <a href="student_dashboard.php" class="nav-link">
@@ -305,7 +305,7 @@ $conn->close();
                 </li>
             </ul>
         </aside>
-        
+
         <main class="main-content">
             <div class="header">
                 <div class="header-title">
@@ -313,7 +313,7 @@ $conn->close();
                     <p>See how you rank among other students</p>
                 </div>
             </div>
-            
+
             <div class="leaderboard-table">
                 <table>
                     <thead>
@@ -328,7 +328,7 @@ $conn->close();
                     <tbody>
                         <?php if ($leaderboard_result && $leaderboard_result->num_rows > 0): ?>
                             <?php $rank = 1; ?>
-                            <?php while($student = $leaderboard_result->fetch_assoc()): 
+                            <?php while($student = $leaderboard_result->fetch_assoc()):
                                 $rank_class = $rank == 1 ? 'rank-1' : ($rank == 2 ? 'rank-2' : ($rank == 3 ? 'rank-3' : 'rank-other'));
                             ?>
                                 <tr>

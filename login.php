@@ -107,14 +107,14 @@ if ($conn && !$conn->connect_error) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - Abacus Academy</title>
     <link rel="manifest" href="/manifest.json">
-    <meta name="theme-color" content="#3b82f6">
+    <meta name="theme-color" content="#ef4444">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="Shenmo">
     <link rel="apple-touch-icon" href="/icons/icon-192.png">
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; display: flex; justify-content: center; align-items: center; padding: 20px; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%); min-height: 100vh; display: flex; justify-content: center; align-items: center; padding: 20px; }
         .login-card {
             background: white;
             padding: 45px 40px;
@@ -125,7 +125,16 @@ if ($conn && !$conn->connect_error) {
             animation: slideUp 0.5s;
         }
         @keyframes slideUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
-        .logo { text-align: center; font-size: 3.5rem; margin-bottom: 10px; }
+        .logo { text-align: center; margin-bottom: 10px; }
+        .login-logo {
+            width: 220px;
+            max-width: 78%;
+            height: auto;
+            max-height: 150px;
+            object-fit: contain;
+            display: block;
+            margin: 0 auto;
+        }
         h1 { text-align: center; color: #2d3748; margin-bottom: 8px; font-size: 1.6rem; }
         .subtitle { text-align: center; color: #718096; margin-bottom: 30px; font-size: 0.95rem; }
         .form-group { margin-bottom: 20px; }
@@ -138,11 +147,11 @@ if ($conn && !$conn->connect_error) {
             font-size: 15px;
             transition: all 0.3s;
         }
-        .form-group input:focus, .form-group select:focus { outline: none; border-color: #667eea; box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.15); }
+        .form-group input:focus, .form-group select:focus { outline: none; border-color: #ef4444; box-shadow: 0 0 0 4px rgba(239,68,68, 0.15); }
         .login-btn {
             width: 100%;
             padding: 14px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
             color: white;
             border: none;
             border-radius: 12px;
@@ -152,11 +161,11 @@ if ($conn && !$conn->connect_error) {
             margin-top: 10px;
             transition: all 0.3s;
         }
-        .login-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4); }
+        .login-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(239,68,68, 0.4); }
         @media(max-width:480px){
             .login-card { padding: 28px 20px; }
             h1 { font-size: 1.3rem; }
-            .logo { font-size: 2.8rem; }
+            .login-logo { width: 180px; max-width: 82%; max-height: 120px; }
         }
         .message {
             padding: 14px 18px;
@@ -184,18 +193,20 @@ if ($conn && !$conn->connect_error) {
             transition: all 0.3s;
         }
         .btn-primary {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
             color: white;
         }
         .btn-primary:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+            box-shadow: 0 8px 20px rgba(239,68,68, 0.4);
         }
     </style>
 </head>
 <body>
     <div class="login-card">
-        <div class="logo">🎓</div>
+        <div class="logo">
+            <img src="assets/Shenmo%20Logo.png" alt="Shenmo App" class="login-logo">
+        </div>
         <h1>Student Portal</h1>
         <p class="subtitle">Sign in to access your dashboard</p>
 
@@ -222,7 +233,7 @@ if ($conn && !$conn->connect_error) {
             </div>
             <button type="submit" class="login-btn">Sign In →</button>
         </form>
-        
+
         <div style="text-align: center; margin-top: 25px; padding-top: 20px; border-top: 1px solid #e2e8f0;">
             <p style="color: #718096; font-size: 0.95rem; margin-bottom: 15px;">Don't have an account?</p>
             <a href="register.php" class="btn btn-primary" style="width: 100%; padding: 12px; font-size: 15px; font-weight: 600;">

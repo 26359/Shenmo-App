@@ -39,12 +39,12 @@ $conn->close();
         .dashboard{display:flex;min-height:100vh}
         .sidebar{width:260px;background:linear-gradient(180deg,#fff 0%,#f8fafc 100%);border-right:1px solid #e2e8f0;padding:20px 0;position:fixed;height:100vh;overflow-y:auto;box-shadow:2px 0 10px rgba(0,0,0,0.05);z-index:200;transition:transform 0.3s}
         .logo{text-align:center;padding:20px;border-bottom:1px solid #e2e8f0;margin-bottom:20px}
-        .logo h1{color:#3b82f6;font-size:1.3rem;font-weight:700}
+        .logo h1{color:#ef4444;font-size:1.3rem;font-weight:700}
         .logo p{color:#94a3b8;font-size:0.8rem;margin-top:4px}
         .nav-menu{list-style:none;padding:0 10px}
         .nav-item{margin-bottom:4px}
         .nav-link{display:flex;align-items:center;gap:12px;padding:11px 14px;color:#475569;text-decoration:none;border-radius:12px;transition:all 0.2s;font-weight:500;font-size:0.92rem}
-        .nav-link:hover,.nav-link.active{background:linear-gradient(135deg,#dbeafe,#e0e7ff);color:#3b82f6}
+        .nav-link:hover,.nav-link.active{background:linear-gradient(135deg,#fee2e2,#fef2f2);color:#ef4444}
         .nav-link .icon{font-size:1.1rem;width:22px;text-align:center}
         .nav-badge{margin-left:auto;background:#ef4444;color:#fff;font-size:0.7rem;padding:2px 7px;border-radius:10px;font-weight:700}
         .main-content{flex:1;margin-left:260px;padding:25px}
@@ -52,24 +52,24 @@ $conn->close();
         .topbar-left{display:flex;align-items:center;gap:14px}
         .hamburger{display:none;background:none;border:none;font-size:1.4rem;cursor:pointer;color:#475569}
         .topbar h2{color:#1e293b;font-size:1.2rem;font-weight:700}
-        .student-badge{background:linear-gradient(135deg,#3b82f6,#8b5cf6);color:#fff;padding:6px 14px;border-radius:20px;font-size:0.85rem;font-weight:600}
+        .student-badge{background:linear-gradient(135deg,#ef4444,#dc2626);color:#fff;padding:6px 14px;border-radius:20px;font-size:0.85rem;font-weight:600}
         .stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;margin-bottom:24px}
         .stat-card{background:#fff;padding:20px;border-radius:14px;box-shadow:0 2px 8px rgba(0,0,0,0.06);border:1px solid #e2e8f0;display:flex;align-items:center;gap:14px;transition:transform 0.2s}
         .stat-card:hover{transform:translateY(-3px)}
         .stat-icon{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;flex-shrink:0}
-        .stat-icon.blue{background:#dbeafe} .stat-icon.green{background:#d1fae5}
-        .stat-icon.orange{background:#fed7aa} .stat-icon.purple{background:#e9d5ff}
+        .stat-icon.red{background:#fee2e2} .stat-icon.green{background:#d1fae5}
+        .stat-icon.orange{background:#fed7aa} .stat-icon.purple{background:#fee2e2}
         .stat-info h3{font-size:1.6rem;font-weight:700;color:#1e293b}
         .stat-info p{color:#64748b;font-size:0.82rem;margin-top:2px}
         .info-card{background:#fff;padding:24px;border-radius:14px;box-shadow:0 2px 8px rgba(0,0,0,0.06);border:1px solid #e2e8f0;margin-bottom:24px}
         .info-card h3{color:#1e293b;font-size:1rem;font-weight:700;margin-bottom:16px}
         .info-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
-        .info-item{background:#f8fafc;padding:14px;border-radius:10px;border-left:4px solid #3b82f6}
+        .info-item{background:#f8fafc;padding:14px;border-radius:10px;border-left:4px solid #ef4444}
         .info-item strong{display:block;color:#64748b;font-size:0.78rem;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px}
         .info-item span{color:#1e293b;font-size:0.95rem;font-weight:500}
         .actions-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px}
         .action-card{background:#fff;padding:20px;border-radius:14px;box-shadow:0 2px 8px rgba(0,0,0,0.06);border:1px solid #e2e8f0;text-decoration:none;color:#1e293b;transition:all 0.2s;display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px}
-        .action-card:hover{transform:translateY(-4px);box-shadow:0 10px 25px rgba(0,0,0,0.12);border-color:#3b82f6}
+        .action-card:hover{transform:translateY(-4px);box-shadow:0 10px 25px rgba(0,0,0,0.12);border-color:#ef4444}
         .action-card .action-icon{font-size:2rem}
         .action-card span{font-size:0.88rem;font-weight:600}
         .section-title{color:#1e293b;font-size:1rem;font-weight:700;margin-bottom:14px}
@@ -92,6 +92,8 @@ $conn->close();
         <ul class="nav-menu">
             <li class="nav-item"><a href="student_dashboard.php" class="nav-link active"><span class="icon">📊</span><span>Dashboard</span></a></li>
             <li class="nav-item"><a href="my_learning.php" class="nav-link"><span class="icon">📚</span><span>My Learning</span></a></li>
+            <li class="nav-item"><a href="practice.php" class="nav-link"><span class="icon">💪</span><span>Practice</span></a></li>
+            <li class="nav-item"><a href="competition.php" class="nav-link"><span class="icon">🏆</span><span>Competition</span></a></li>
             <li class="nav-item"><a href="homework.php" class="nav-link"><span class="icon">📝</span><span>Homework</span><?php if($pending_hw > 0): ?><span class="nav-badge"><?php echo $pending_hw; ?></span><?php endif; ?></a></li>
             <li class="nav-item"><a href="certificates.php" class="nav-link"><span class="icon">🏆</span><span>Certificates</span></a></li>
             <li class="nav-item"><a href="student_payments.php" class="nav-link"><span class="icon">💳</span><span>Payments</span></a></li>
@@ -112,7 +114,7 @@ $conn->close();
 
         <div class="stats-grid">
             <div class="stat-card">
-                <div class="stat-icon blue">📝</div>
+                <div class="stat-icon red">📝</div>
                 <div class="stat-info"><h3><?php echo $total_hw; ?></h3><p>Total Homework</p></div>
             </div>
             <div class="stat-card">
@@ -146,6 +148,8 @@ $conn->close();
 
         <p class="section-title">🚀 Quick Actions</p>
         <div class="actions-grid">
+            <a href="practice.php" class="action-card"><div class="action-icon">💪</div><span>Practice</span></a>
+            <a href="competition.php" class="action-card"><div class="action-icon">🏆</div><span>Competition</span></a>
             <a href="homework.php" class="action-card"><div class="action-icon">📝</div><span>Homework</span></a>
             <a href="certificates.php" class="action-card"><div class="action-icon">🏆</div><span>Certificates</span></a>
             <a href="student_payments.php" class="action-card"><div class="action-icon">💳</div><span>Payments</span></a>

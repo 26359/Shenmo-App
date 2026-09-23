@@ -42,7 +42,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $stmt = $conn->prepare("INSERT INTO shenmo_user (user_names, user_country, user_city, use_telephone, user_password, user_birthdate, email, email_verified) VALUES (?, ?, ?, ?, ?, ?, ?, 1)");
             $stmt->bind_param("sssssss", $user_names, $user_country, $user_city, $use_telephone, $user_password, $user_birthdate, $email);
             if ($stmt->execute()) {
-                $message = "Account created! You can now <a href='login.php' style='color:#667eea;font-weight:bold'>login here</a>.";
+                $message = "Account created! You can now <a href='login.php' style='color:#ef4444;font-weight:bold'>login here</a>.";
                 $_POST = [];
             } else {
                 $error = "Registration failed: " . $stmt->error;
@@ -61,7 +61,7 @@ $conn->close();
     <title>Admin Registration - Abacus Academy</title>
     <style>
         *{box-sizing:border-box;margin:0;padding:0}
-        body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);min-height:100vh;display:flex;justify-content:center;align-items:center;padding:20px}
+        body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:linear-gradient(135deg,#ef4444 0%,#dc2626 100%);min-height:100vh;display:flex;justify-content:center;align-items:center;padding:20px}
         .register-card{background:#fff;padding:40px;border-radius:24px;box-shadow:0 25px 60px rgba(0,0,0,0.3);width:100%;max-width:600px;animation:slideUp 0.5s}
         @keyframes slideUp{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:translateY(0)}}
         .logo{text-align:center;font-size:3rem;margin-bottom:10px}
@@ -71,14 +71,14 @@ $conn->close();
         .form-group{margin-bottom:20px}
         .form-group label{display:block;margin-bottom:8px;font-weight:600;color:#4a5568;font-size:0.9rem}
         .form-group input{width:100%;padding:12px 16px;border:2px solid #e2e8f0;border-radius:10px;font-size:14px;transition:all 0.3s}
-        .form-group input:focus{outline:none;border-color:#667eea;box-shadow:0 0 0 3px rgba(102,126,234,0.1)}
-        .btn{width:100%;padding:14px;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:#fff;border:none;border-radius:12px;cursor:pointer;font-size:16px;font-weight:600;margin-top:10px;transition:all 0.3s}
-        .btn:hover{transform:translateY(-2px);box-shadow:0 10px 25px rgba(102,126,234,0.4)}
+        .form-group input:focus{outline:none;border-color:#ef4444;box-shadow:0 0 0 3px rgba(239,68,68,0.1)}
+        .btn{width:100%;padding:14px;background:linear-gradient(135deg,#ef4444 0%,#dc2626 100%);color:#fff;border:none;border-radius:12px;cursor:pointer;font-size:16px;font-weight:600;margin-top:10px;transition:all 0.3s}
+        .btn:hover{transform:translateY(-2px);box-shadow:0 10px 25px rgba(239,68,68,0.4)}
         .message{padding:14px 18px;border-radius:12px;margin-bottom:20px;text-align:center;font-weight:600;font-size:0.95rem}
         .message.success{background:linear-gradient(135deg,#d4edda,#c3e6cb);color:#155724;border:1px solid #c3e6cb}
         .message.error{background:linear-gradient(135deg,#f8d7da,#f5c6cb);color:#721c24;border:1px solid #f5c6cb}
         .login-link{text-align:center;margin-top:20px;color:#718096;font-size:0.95rem}
-        .login-link a{color:#667eea;text-decoration:none;font-weight:600}
+        .login-link a{color:#ef4444;text-decoration:none;font-weight:600}
         @media(max-width:768px){.form-row{grid-template-columns:1fr}}
     </style>
 </head>

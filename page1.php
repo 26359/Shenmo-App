@@ -23,7 +23,7 @@ $result = $conn->query("SELECT user_id, user_names, user_country, user_city, use
     <style>
         table { border-collapse: collapse; width: 100%; }
         th, td { border: 1px solid #ddd; padding: 8px; }
-        th { background: #3498db; color: white; }
+        th { background: #ef4444; color: white; }
     </style>
 </head>
 <body>

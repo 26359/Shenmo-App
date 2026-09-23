@@ -1,5 +1,5 @@
-const CACHE = 'shenmo-v1';
-const OFFLINE_URL = '/shenmo_app1/login.php';
+const CACHE = 'shenmo-v2';
+const OFFLINE_URL = '/login.php';
 
 self.addEventListener('install', e => {
   e.waitUntil(

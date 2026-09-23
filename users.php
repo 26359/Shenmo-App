@@ -30,7 +30,7 @@ $result = $conn->query("SELECT user_id, user_names, user_country, user_city, use
         body { font-family: Arial, sans-serif; padding: 20px; background: #f5f5f5; }
         table { border-collapse: collapse; width: 100%; background: white; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
         th, td { border: 1px solid #ddd; padding: 10px; text-align: left; }
-        th { background: #3498db; color: white; }
+        th { background: #ef4444; color: white; }
         tr:nth-child(even) { background: #f9f9f9; }
         h2 { color: #333; }
     </style>
