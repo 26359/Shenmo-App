@@ -1,15 +1,14 @@
 <?php
 session_start();
 
-$host = "fdb1028.awardspace.net";
-$dbname = "4783798_shenmoapp";
-$user = "4783798_shenmoapp";
-$pass = "muganwa123";
+require_once __DIR__ . '/config/database.php';
+$config = require __DIR__ . '/config/database.php';
 
 $message = "";
 $conn = null;
 try {
-    $conn = new mysqli($host, $user, $pass, $dbname);
+    $conn = new mysqli($config['host'], $config['user'], $config['pass'], $config['dbname']);
+    $conn->set_charset($config['charset']);
     if ($conn->connect_error) {
         $message = "Connection failed: " . $conn->connect_error;
     }
@@ -59,21 +58,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $message = "Database unavailable. Please try again later.";
     } else {
         if ($role == 'admin') {
-            $sql = "SELECT user_id, user_names FROM shenmo_user WHERE user_names = ? AND user_password = ?";
+            $sql = "SELECT user_id, user_names, user_password FROM shenmo_user WHERE user_names = ?";
             $stmt = $conn->prepare($sql);
-            $stmt->bind_param("ss", $username, $password);
+            $stmt->bind_param("s", $username);
             $stmt->execute();
             $result = $stmt->get_result();
 
             if ($row = $result->fetch_assoc()) {
-                $_SESSION['role'] = 'admin';
-                $_SESSION['user_id'] = $row['user_id'];
-                $_SESSION['user_names'] = $row['user_names'];
-                header("Location: admin_dashboard.php");
-                exit;
-            } else {
-                $message = "Invalid admin credentials.";
+                if (password_verify($password, $row['user_password'])) {
+                    $_SESSION['role'] = 'admin';
+                    $_SESSION['user_id'] = $row['user_id'];
+                    $_SESSION['user_names'] = $row['user_names'];
+                    header("Location: admin_dashboard.php");
+                    exit;
+                }
             }
+            $message = "Invalid admin credentials.";
             $stmt->close();
         } elseif ($role == 'student') {
             $sql = "SELECT student_id, full_name FROM students WHERE username = ? AND password = ?";

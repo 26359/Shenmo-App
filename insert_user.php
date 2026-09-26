@@ -2,8 +2,8 @@
 // Connection settings
 $host = "fdb1028.awardspace.net";
 $dbname = "4783798_shenmoapp";
-$user = "4783798_shenmoapp";
-$pass = "muganwa123";
+$user = "";
+$pass = "bjfvewtp_mindbeads";
 $message = "";
 
 // Handle form submission

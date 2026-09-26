@@ -4,9 +4,10 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'student' || empty($_SESS
     header("Location: login.php"); exit;
 }
 
-$host = "fdb1028.awardspace.net"; $dbname = "4783798_shenmoapp"; $user = "4783798_shenmoapp"; $pass = "muganwa123";
+require_once __DIR__ . '/config/database.php';
+$config = require __DIR__ . '/config/database.php';
 try {
-    $conn = new mysqli($host, $user, $pass, $dbname);
+    $conn = new mysqli($config['host'], $config['user'], $config['pass'], $config['dbname']);
     if ($conn->connect_error) die("Connection failed: " . $conn->connect_error);
 } catch (mysqli_sql_exception $e) {
     die("Connection failed: " . $e->getMessage());
