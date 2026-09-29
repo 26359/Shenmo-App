@@ -27,9 +27,9 @@ $leaderboard_result = $conn->query("
         COALESCE(SUM(xp.xp_amount), 0) as total_xp,
         COUNT(DISTINCT CASE WHEN sp.is_completed = 1 THEN sp.course_id END) as completed_levels
     FROM students s
-    LEFT JOIN student_achievements sa ON s.student_id = sa.student_id
-    LEFT JOIN xp_points xp ON s.student_id = xp.student_id
-    LEFT JOIN student_progress sp ON s.student_id = sp.student_id
+    LEFT JOIN student_achievements sa ON s.student_id COLLATE utf8mb4_general_ci = sa.student_id
+    LEFT JOIN xp_points xp ON s.student_id COLLATE utf8mb4_general_ci = xp.student_id
+    LEFT JOIN student_progress sp ON s.student_id COLLATE utf8mb4_general_ci = sp.student_id
     GROUP BY s.student_id, s.full_name
     ORDER BY total_xp DESC
     LIMIT 20
@@ -183,6 +183,34 @@ $conn->close();
             font-weight: 600;
         }
 
+        .live-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            padding: 8px 14px;
+            border-radius: 20px;
+            background: #f1f5f9;
+            color: #64748b;
+        }
+        .live-status .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #94a3b8;
+        }
+        .live-status.is-live { background: #dcfce7; color: #15803d; }
+        .live-status.is-live .dot { background: #22c55e; animation: pulse 1.6s infinite; }
+        .live-status.is-warn { background: #fef3c7; color: #92400e; }
+        .live-status.is-warn .dot { background: #f59e0b; }
+        .live-status.is-error { background: #fee2e2; color: #991b1b; }
+        .live-status.is-error .dot { background: #ef4444; }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.35; }
+        }
+
         @media (max-width: 768px) {
             .sidebar { width: 100%; position: relative; height: auto; }
             .main-content { margin-left: 0; }
@@ -310,6 +338,10 @@ $conn->close();
                     <h2>Leaderboard</h2>
                     <p>See how you rank among other students</p>
                 </div>
+                <div class="live-status" id="liveStatus">
+                    <span class="dot"></span>
+                    <span id="liveStatusText">Connecting…</span>
+                </div>
             </div>
 
             <div class="leaderboard-table">
@@ -323,7 +355,7 @@ $conn->close();
                             <th>Levels Completed</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="leaderboardBody">
                         <?php if ($leaderboard_result && $leaderboard_result->num_rows > 0): ?>
                             <?php $rank = 1; ?>
                             <?php while($student = $leaderboard_result->fetch_assoc()):
@@ -370,5 +402,138 @@ $conn->close();
             </div>
         </main>
     </div>
+
+<script>
+    (function () {
+        var API = 'api/leaderboard_api.php';
+        var tbody = document.getElementById('leaderboardBody');
+        var statusBox = document.getElementById('liveStatus');
+        var statusText = document.getElementById('liveStatusText');
+        var source = null;
+        var pollTimer = null;
+
+        function setStatus(state, text) {
+            statusBox.className = 'live-status' + (state ? ' is-' + state : '');
+            statusText.textContent = text;
+        }
+
+        function escapeHtml(value) {
+            var div = document.createElement('div');
+            div.textContent = value == null ? '' : String(value);
+            return div.innerHTML;
+        }
+
+        function rankClass(rank) {
+            if (rank === 1) return 'rank-1';
+            if (rank === 2) return 'rank-2';
+            if (rank === 3) return 'rank-3';
+            return 'rank-other';
+        }
+
+        function formatNumber(value) {
+            var n = Number(value) || 0;
+            return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+        }
+
+        function renderRows(entries) {
+            if (!entries || entries.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="5" style="text-align: center; padding: 40px; color: #64748b;">No rankings available yet.</td></tr>';
+                return;
+            }
+
+            var html = '';
+            entries.forEach(function (entry) {
+                var rank = Number(entry.rank) || 0;
+                var name = entry.full_name || '';
+                var initials = name.substring(0, 2).toUpperCase();
+                html += '<tr>' +
+                    '<td><span class="rank ' + rankClass(rank) + '">' + rank + '</span></td>' +
+                    '<td><div class="student-info"><div class="student-avatar">' + escapeHtml(initials) + '</div>' +
+                    '<div><div style="font-weight: 600; color: #1e293b;">' + escapeHtml(name) + '</div>' +
+                    '<div style="font-size: 0.85rem; color: #64748b;">' + escapeHtml(entry.student_id) + '</div></div></div></td>' +
+                    '<td><span class="xp-badge">⭐ ' + formatNumber(entry.total_xp) + ' XP</span></td>' +
+                    '<td>' + formatNumber(entry.total_achievements) + ' badges</td>' +
+                    '<td>' + formatNumber(entry.completed_levels) + ' levels</td>' +
+                '</tr>';
+            });
+
+            tbody.innerHTML = html;
+        }
+
+        function applyPayload(payload) {
+            if (!payload || payload.success !== true || !Array.isArray(payload.entries)) {
+                return false;
+            }
+            renderRows(payload.entries);
+            return true;
+        }
+
+        // Snapshot fallback for when the stream is unavailable.
+        function startPolling(reason) {
+            if (pollTimer) return;
+            setStatus('warn', reason || 'Refreshing every 10s');
+
+            var tick = function () {
+                fetch(API + '?action=snapshot', { credentials: 'same-origin' })
+                    .then(function (response) { return response.json(); })
+                    .then(function (payload) { applyPayload(payload); })
+                    .catch(function () { setStatus('error', 'Live updates unavailable'); });
+            };
+
+            tick();
+            pollTimer = window.setInterval(tick, 10000);
+        }
+
+        function stopStream() {
+            if (source) {
+                source.close();
+                source = null;
+            }
+        }
+
+        function readEventData(event) {
+            try {
+                return JSON.parse(event.data);
+            } catch (err) {
+                return null;
+            }
+        }
+
+        if (typeof EventSource === 'undefined') {
+            startPolling('Live updates not supported here');
+            return;
+        }
+
+        source = new EventSource(API + '?action=stream');
+
+        source.addEventListener('open', function () {
+            setStatus('live', 'Live');
+        });
+
+        source.addEventListener('leaderboard', function (event) {
+            var payload = readEventData(event);
+            if (!applyPayload(payload)) {
+                // Malformed frame: do not keep trusting this stream.
+                setStatus('warn', 'Refreshing every 10s');
+                stopStream();
+                startPolling();
+            }
+        });
+
+        // Server-side failures arrive as a frame. The name is deliberately not
+        // "error" because EventSource reserves that for transport failures.
+        source.addEventListener('stream_error', function (event) {
+            var payload = readEventData(event);
+            var message = (payload && payload.error) ? payload.error : 'Stream error';
+            stopStream();
+            startPolling(message);
+        });
+
+        // Transport failure: the browser reconnects on its own.
+        source.addEventListener('error', function () {
+            setStatus('warn', 'Reconnecting…');
+        });
+    })();
+</script>
 </body>
 </html>
