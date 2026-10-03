@@ -86,7 +86,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $_SESSION['role'] = 'student';
                 $_SESSION['student_id'] = $row['student_id'];
                 $_SESSION['full_name'] = $row['full_name'];
-                header("Location: student_dashboard.php");
+                header("Location: practice.php");
                 exit;
             } else {
                 $message = "Invalid student credentials.";
